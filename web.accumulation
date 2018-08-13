@@ -1,0 +1,21 @@
+Qualcomm Audio HAL 音频通路设置
+https://blog.csdn.net/LoongEmbedded/article/details/80404839
+
+kernel官网
+https://www.kernel.org/doc/html/latest/
+https://www.kernel.org/doc/html/latest/sound/index.html
+
+qxdp使用方法
+https://wenku.baidu.com/view/dcd622ebce2f0066f4332202.html
+
+soc介绍
+http://www.360doc.com/content/15/0806/18/6954561_489950143.shtml
+
+
+https://wenku.baidu.com/view/dcd622ebce2f0066f4332202.html
+
+https://blog.csdn.net/whshiyun/article/details/80889838
+
+https://blog.csdn.net/chenpuo/article/details/80815636
+
+https://createpoint.qti.qualcomm.com/cplogin_arcot.html?TYPE=33554433&REALMOID=06-00080ed5-4a1b-1529-9b91-2e0d0a35f024&GUID=&SMAUTHREASON=0&METHOD=GET&SMAGENTNAME=-SM-3fDqOYKHJxzpIZPr%2fn8KIx3w0nVTe5%2bfAFza9cSe402EShObc8Lno0LoyzNHQPLP&TARGET=-SM-HTTPS%3a%2f%2fcreatepoint%2eqti%2equalcomm%2ecom%2fdashboard%2f

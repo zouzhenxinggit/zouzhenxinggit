@@ -1,0 +1,171 @@
+git clone git://github.com/schacon/grit.git zouzhenxing  			//从已有的 Git 仓库克隆出一个新的镜像仓库
+git status 									//查看当前git仓库状态				
+git diff --cached 								//查看暂存区和上次提交的区别
+git diff									//查看暂存区和未暂存的区别
+git add xxx.xx									//提交到暂存区							
+git commit -m "提交信息"							//提交代码 字符串做提交信息
+git commit 									//默认提交
+git log .									//查看当前目录日志信息
+git log xxx.xxx									//查看文件的日志信息
+git log 									//查看项目的日志信息
+git show f139b22e306d342e631786048585455a83e55328				//查看详细修改信息
+git rm xxx.xxx									//移除文件 目录下的文件就会被删除 在git status之后暂存区就会出现 删除 xxx.xxx的字样
+git checkout -- xxx.xxx								//从暂存区删除 xxx.xxx文件删除的信息 	之后在重新 git commit
+git rm --cached readme.txt							//想把文件从 Git 仓库中删除(亦即从暂存区域移除),但仍然希望保留在当前工作目录中
+git log -p									//显示详细信息 
+git log -1 -2									//-p 选项展开显示每次提交的内容差异,用 -2 则仅显示最近的两次更新		
+git log --stat									//仅显示简要的增改行数统计 也是比较好用的
+git log --pretty=email format: full fuller medium raw short    			//花式打印 自行感悟78	 oneline 挺好玩的
+git log --pretty=format:"%h - %an, %ar : %s"					//format,可以定制要显示的记录格式,这样的输出便于后期编程提取分
+选项 说明
+%H 提交对象(commit)的完整哈希字串
+%h 提交对象的简短哈希字串
+%T 树对象(tree)的完整哈希字串
+%t 树对象的简短哈希字串
+%P 父对象(parent)的完整哈希字串
+%p 父对象的简短哈希字串
+git log --pretty=format:"%an %ae %h %s" --graph					//结合 --graph 选项,可以看到开头多出一些 ASCII 字符串表
+示的简单图形,形象地展示了每个提交所在的分支及其分化衍合情况。
+git log --since=2.weeks								//最近两周的提交
+git log --author Zou 								//按作者查找提交
+git log --since="2 years 1 day 3 minutes ago"					//或者是多久以前
+比如说具体的某一天
+git log --since="2018-04-25"							//具体的某一天？？
+git commit --amend								//刚才交错了 重新提交
+此命令将使用当前的暂存区域快照提交。如果刚才提交完没有作任何改动,直接运行此命令的话,相当于有机会重新编辑提交说明,而所提交的文件快照和之前的一样。
+git reset HEAD API_.txt								//撤出暂存区
+git checkout -- filename							//取消工作区的修改工作 回到之前的版本
+git remote 									//查看当前项目有哪些远程仓库
+git remote -v									//查看当前项目有哪些远程仓库 + 显示对应的克隆地址
+git remote show origin								//查看远程仓库信息
+git remote set-url --push [remote-name] [newUrl]				//修改远程仓库
+git remote rename <old-remote-name> <new-remote-name>				//重命名远程仓库
+git remote add [shortname] [url]:
+git remote add pb git://github.com/paulboone/ticgit.git				//要添加一个新的远程仓库
+git fetch zouzx
+git fetch [remote-name]  							//从远程仓库抓取数据 是抓取信息 并是不把数据都下载下来
+说明：
+1.此命令会到远程仓库中拉取所有你本地仓库中还没有的数据。运行完成后，你就可以在本地访问该远程仓库中的所有分支
+2.fetch 命令只是将远端的数据拉到本地仓库，并不自动合并到当前工作分支，只有当你确实准备好了，才能手工合并
+//运行结果    
+zouzhenxing@zouzhenxing-OptiPlex-3020:~/桌面/git_text/zouzhenxing$ git fetch pb
+remote: Counting obects: 634, done.
+remote: Total 634 (delta 0), reused 0 (delta 0), pack-reused 634
+接收对象中: 100% (634/634), 88.92 KiB | 5.00 KiB/s, done.
+处理 delta 中: 100% (261/261), done.
+来自 git://github.com/paulboone/ticgit
+ * [新分支]          master     -> pb/master
+ * [新分支]          ticgit     -> pb/ticgit
+
+git fetch origin 
+如果这个远程仓库已经抓过了 那么再次抓就是更新了
+如果是克隆了一个仓库,此命令会自动将远程仓库归于 origin 名下。所以,git fetch origin 会抓取从你上次克隆以来别人上传到此远程仓库中的所有更新(或是上次 fetch 以来别人提交的更新)。
+
+
+git remote rm paul 								//删除远程仓库
+git branch -r -D origin/HEAD
+git pull [remote-name] [本地分支名]						//拉取远程仓库	说明： 一般我们获取代码更新都是用git pull, 目的是从原始克隆的远端仓库中抓取数据后，合并到工作目录中的当前分支
+git push [remote-name] [本地分支名]						//推送远程仓库	说明： 只有在所克隆的服务器上有写权限，或者同一时刻没有其他人在推数据，这条命令才会如期完成任务。 如果在你推数据前，已经有其他人推送了若干更新，那你的推送操作就会被驳回。你必须先把他们的更新抓取到本地git pull，合并到自己的项目中，然后才可以再次推送。
+例如git push zouzx master	
+git checkout -b local_integration remotes/origin/integration			//新建仓库切换仓库建立连接
+git branch -va									//详细查看本地仓库 + 远程仓库	
+git checkout xxx 切换分支
+git branch xxxxxxx								//新建分支
+
+
+git tag 									//显示已有标签
+git tag -l 'v1.4.2.*'								//查找'v1.4.2.*'标签
+git tag -a v1.4 -m 'my version 1.4'						//含附注的标签
+git tag v1.4-lw									//轻量级标签 不加-asm
+git tag -a v1.2 9fceb02							//给以前的版本打标志
+
+默认情况下,git push 并不会把标签传送到远端服务器上,只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支,运行 git push origin [tagname] 即可
+git push zouzx v1.2
+git push origin --tags 推送所有的标签
+
+
+
+这是新建一个目录 饭后同步代码的过程
+mkdir fenzhi
+ls
+cd fenzhi/
+git init 
+ll
+git remote -v
+git remote add zouzx http://47.104.87.83/zouzhenxing/zouzhenxing-project.git
+git remote -v
+ll
+git branch -av
+clear
+git fetch zouzx 
+ll
+git branch -av
+git pull zouzx master 
+ll
+clear
+history
+
+
+
+一个基本的 Git Diff 格式如下：
+	
+diff --git a/f1 b/f1
+index 6f8a38c..449b072 100644
+--- a/f1
++++ b/f1
+@@ -1,7 +1,7 @@
+ 1
+ 2
+ 3
+-a
++b
+ 5
+ 6
+ 7
+第一行是 Git Diff 的 header，进行比较的是 a 版本的 f1（变动前）和 b 版本的 f1（变动后）。
+第二行是两个版本的 hash 值以及文件模式（100644 表示是文本文件）。
+第三、四行表示进行比较的两个文件，--- 表示变动前的版本，+++ 表示变动后的版本。
+第五行是一个 thunk header（可能会有多个），提供变动的”上下文“（context），-1,7表示接下来展示变动前文件第一至第七行，+1,7 表示接下来展示变动后文件第一至第七行。
+接下来的几行就是具体的变动内容。它将两个文件的上下文合并显示在一起，每一行前面是一个标志位，''（空）表示无变化（是一个上下文行）、- 表示变动前文件删除的行、+ 表示变动后文件新增的行。可以看出此次变动，文件 f1 的第 4 行内容从 a 变为了b
+
+
+退回某一版本
+git reset --hard ac4272794e71088024c65c56e659ea683e084b75
+同步版本
+repo sync . -c --no-tags -j4
+
+合并分支
+git checkout master 
+git merge iss53
+讲iss53合并到master
+
+git merge 						//合并分支
+git branch --merged 					//从该清单中筛选出你已经(或尚未)与当前分支合并的分支,可以用 --merge 和 --no-merged 选项
+git branch --no-merged 
+git branch 213 						//新建分支
+git branch -D 213 					//删除分支
+git checkout -b						//创建并且切换分支			
+
+合并和衍合的区别
+git rebase master					//衍合
+它的原理是回到两个分支(你所在的分支和你想要衍合进去的分支)的共同祖先,提取你所在分支每次提交时产生的差异(diff),把这些差异分别保存到临时文件里,然后从当前分支转换到你需要衍合入的分支,依序施用每一个差异补丁文件。
+      c4 
+c1 c2 c3 ---- c4' 原来是c3 c4现在是在c3的基础上自动提交仓库了 变成c4'了 
+git checkout experiment 
+git rebase master 	master不动 experiment并入分支master   将当前分支并入master分支。experiment指向c4'
+git rebase --onto master server client			//这基本上等于在说“检出 client 分支,找出client 分支和 server 分支的共同祖先之后的变化,然后把它们在 master 上重演一遍” 就是讲clinent衍合到master分支上 保留server分支
+git checkout master
+git merge client					//在快速合并一下
+git rebase master server				//讲server衍合到master上
+git rebase [主分支] [特性分支]				//git rebase  于是 server 的进度应用到 master 的基础上
+git checkout master					//快速合并一下主分支 简称快进
+git merge server
+
+永远不要衍合那些已经推送到公共仓库的更新。
+如果你遵循这条金科玉律,就不会出差错。否则,人民群众会仇恨你,你的朋友和家人也会嘲笑你,唾弃你。
+
+
+
+git log --text 只查看 文本修改 会比git log少很多
+删除仓库 git push 地址 :fenhzi
+ 
