@@ -10,16 +10,43 @@
  * GNU General Public License for more details.
  */
 
-#ifndef _SNAKE_BEAN_
-#define _SNAKE_BEAN_
+#ifndef _SNAKE_FRAME_
+#define _SNAKE_FRAME_
 
-#include "time.h"
 #include "stdio.h"
-#include "frame.h"
 
+#define loop_output(num, end) \
+    for (num = 0; num < end; ++num)
 
-void bean_create(struct frame_config frame_params);
+struct frame_config {
+	unsigned int length;
+	unsigned int width;
+	unsigned int up_distance;
+	unsigned int left_distance;
+}; 
 
+struct ranks {
+	char* row_down;
+	char row_up;
+	char column;	
+};
 
+struct map_config {
+	struct ranks limit;
+	char outside;
+	char space;
+	char change_line;
+	//add..
+}; 
+
+enum {
+	MAP_OUTSIDE = '/',
+	MAP_SPACE = ' ',
+	MAP_CHANGE_LINE = '\n',
+	MAP_ROW_UP = '_',
+	MAP_COLUMN = '|',
+};
+
+void frame_create(struct frame_config frame_params);
 
 #endif

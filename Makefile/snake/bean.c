@@ -12,8 +12,22 @@
 
 #include "bean.h"
 
-void bean_text(void){
+//
+unsigned int rand_create(unsigned int start,
+											  unsigned int end)
+{
 
-	while(1);
+
+}
+void bean_create(struct frame_config* frame_params)
+{ 
+
+	srand((unsigned)time(NULL));
+
+	while(1){
+		printf("%d\n", rand()%frame_params.length);
+		printf("%d\n", rand()%frame_params.width);
+		sleep(0.1);
+	}
 }
 

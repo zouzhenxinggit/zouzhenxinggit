@@ -11,15 +11,36 @@
  */
 
 #include "stdio.h"
+#include "stdlib.h"
 #include "snake.h"
 #include "bean.h"
+#include "frame.h"
 
+#define FRAME_LENGTH 10//150
+#define FRAME_WIDTH 4//40
+#define FRAME_UP_DISTANCE 8
+#define FRAME_LEFT_DISTANCE 30
 
+struct frame_config frame_default = {
+	.length = FRAME_LENGTH,
+	.width = FRAME_WIDTH,
+	.up_distance = FRAME_UP_DISTANCE,
+	.left_distance = FRAME_LEFT_DISTANCE,
+};
 
 void main(int argc, char const *argv[])
 {
+	system("clear");
+	frame_create(frame_default);
+	bean_create(&frame_default);
+	//printf("\033[0;0H\n");
 
-	bean_text();
-	/* code */
 	while(1);
+	//sleep(1);
+	//while(1){
+		//frame_create(frame_default);while(1);
+		//sleep(1);
+		//system("clear");
+		//sleep(1);
+	//}
 }
