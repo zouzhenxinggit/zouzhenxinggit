@@ -13,9 +13,16 @@
  #ifndef _SNAKE_SNAKE_
 #define _SNAKE_SNAKE_
 
+#include "stdio.h"
+
+struct hw_module_methods_t;
 
 
+typedef struct hw_module_methods_t {
+    /** Open a specific device */
+    void(*open)(void);
 
+} hw_module_methods_t;
 
 
 

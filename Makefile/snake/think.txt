@@ -1,0 +1,10 @@
+	int snake_initialization(struct snake_config **snake_adev); 
+1 分配内存 出错返回
+2 创建链表 初始化节点2个 方块当蛇身体 
+3 并挂载自己实现的向左 向右 函数
+
+
+
+
+
+	void snake_runing(struct snake_config *snake_adev, ); 

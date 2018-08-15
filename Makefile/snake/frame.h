@@ -47,6 +47,6 @@ enum {
 	MAP_COLUMN = '|',
 };
 
-void frame_create(struct frame_config frame_params);
+int frame_create(struct frame_config frame_params);
 
 #endif

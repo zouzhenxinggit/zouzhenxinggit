@@ -10,10 +10,10 @@
  * GNU General Public License for more details.
  */
 
-//#define DEBUG
+#define DEBUG
 #include "frame.h"
 
-struct map_config map_default = {
+static struct map_config map_default = {
 	.limit = {
 		.row_up = MAP_ROW_UP,
 		.row_down = "¯",
@@ -24,13 +24,15 @@ struct map_config map_default = {
 	.change_line = MAP_CHANGE_LINE,
 };
 
-void frame_create(struct frame_config frame_params)
+int frame_create(struct frame_config frame_params)
 {
-	unsigned int i,j;
+	unsigned int i, j;
 
-	if (frame_params.)
-	{
-		/* code */
+	if (frame_params.length < 5 || frame_params.width <  5) {
+#ifdef DEBUG
+		printf("error: space too small !\n");
+ #endif
+		return -1;
 	}
 	
 	loop_output(i, frame_params.up_distance - 1)
@@ -93,8 +95,5 @@ void frame_create(struct frame_config frame_params)
 
 	printf("%c\a", map_default.change_line);
 
-#ifdef DEBUG
-	printf("\033[0;0H");
-	printf("create_framework\n");
- #endif
+	return 0;
 }

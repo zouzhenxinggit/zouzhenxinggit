@@ -16,12 +16,15 @@
 #include "bean.h"
 #include "frame.h"
 
-#define FRAME_LENGTH 10//150
-#define FRAME_WIDTH 4//40
+#define FRAME_LENGTH 150
+#define FRAME_WIDTH 40
 #define FRAME_UP_DISTANCE 8
 #define FRAME_LEFT_DISTANCE 30
 
-struct frame_config frame_default = {
+static struct bean_config *bean_dev = NULL;
+static struct snake_config *snake_dev = NULL;
+
+static struct frame_config frame_default = {
 	.length = FRAME_LENGTH,
 	.width = FRAME_WIDTH,
 	.up_distance = FRAME_UP_DISTANCE,
@@ -30,17 +33,36 @@ struct frame_config frame_default = {
 
 void main(int argc, char const *argv[])
 {
-	system("clear");
-	frame_create(frame_default);
-	bean_create(&frame_default);
-	//printf("\033[0;0H\n");
+	int res = 0;
 
+	system("clear");
+
+
+
+/*
+	res = frame_create(frame_default);
+	if (res < 0) {
+		goto done;
+	}
+
+	res = bean_initialization(&bean_dev);
+	if (res < 0) {
+		goto done;
+	}
+
+	while(1){
+
+	res = bean_create(&frame_default, bean_dev);
+	if (res < 0) {
+		goto done;
+	}
+
+	sleep(1);
+	bean_delete(bean_dev);
+}
+	
+done:
+	printf("error, stop running !\n"); 
+*/	
 	while(1);
-	//sleep(1);
-	//while(1){
-		//frame_create(frame_default);while(1);
-		//sleep(1);
-		//system("clear");
-		//sleep(1);
-	//}
 }

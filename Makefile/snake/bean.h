@@ -16,10 +16,31 @@
 #include "time.h"
 #include "stdio.h"
 #include "frame.h"
+#include "stdlib.h"
 
+#define BEAN_MAKE "㊉"
+#define BEAN_DEL "  "
 
-void bean_create(struct frame_config frame_params);
+struct bean_shape {
+	char* bean_make;
+	char* bean_del;
+};
 
+struct bean_config {
+	unsigned int row;
+	unsigned int column;
+	struct bean_shape bean_shape_params;
+};
 
+int rand_create(unsigned int *start/* out */,
+							unsigned int *end/* out */,
+							struct frame_config *frame_params/* in */);
+
+int bean_initialization(struct bean_config **bean_adev);
+
+int bean_create(struct frame_config *frame_params,
+						   struct bean_config *bean_adev);
+
+void bean_delete(struct bean_config *bean_adev);
 
 #endif

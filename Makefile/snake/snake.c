@@ -11,3 +11,12 @@
  */
 
 #include "snake.h"
+
+void adev_open(void){
+	printf("adev_open\n");
+}
+
+static struct hw_module_methods_t hal_module_methods = {
+    .open = adev_open,
+};                                                       
+
