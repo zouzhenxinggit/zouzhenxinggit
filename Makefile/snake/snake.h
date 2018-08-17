@@ -68,5 +68,5 @@ struct snake {
 
 int snake_initialization(struct snake **snake_adev) ;
 static int snake_list_create(struct snake *snake_adev);
-
+void snake_list_front_move(struct snake *snake_adev);
 #endif

@@ -40,7 +40,7 @@ void main(int argc, char const *argv[])
 snake_initialization(&snake_dev);
 
 snake_dev->action.snake_create(snake_dev);
-
+snake_list_front_move(snake_dev);
 /*
 	res = frame_create(frame_default);
 	if (res < 0) {
