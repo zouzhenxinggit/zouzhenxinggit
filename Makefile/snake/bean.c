@@ -20,9 +20,7 @@ int rand_create(unsigned int *start,
 							struct frame_config *frame_params)
 {
 	if (NULL == start || NULL == end || NULL == frame_params) {
-#ifdef DEBUG
-		printf("error: Illegal parameter\n");
- #endif
+		printf("rand_create: error: Illegal parameter\n");
 		return -1;
 	}
 
@@ -36,13 +34,10 @@ int bean_initialization(struct bean_config **bean_adev)
 	struct bean_config *bean_tmp = NULL;
 
 	srand((unsigned)time(NULL));
-
 	bean_tmp = (struct bean_config*) malloc (sizeof(struct bean_config));
 
 	if (NULL == bean_tmp){
-#ifdef DEBUG
-		printf("error: Failed to allocate memory !\n");
- #endif
+		printf("bean_initialization: error: Failed to allocate memory !\n");
 		return -1;
 	}
 
@@ -50,7 +45,6 @@ int bean_initialization(struct bean_config **bean_adev)
 	bean_tmp->bean_shape_params.bean_del = BEAN_DEL;
 
 	*bean_adev = bean_tmp;
-
 	return 0;
 }
 
@@ -59,10 +53,9 @@ int bean_create(struct frame_config *frame_params,
 { 
 	int bean_row, bean_column, res = 0;
 
-	if (rand_create(&bean_row, &bean_column, frame_params) != 0){
-#ifdef DEBUG
-		printf("error: Random number failure !\n");
- #endif
+	if (rand_create(&bean_row, &bean_column, frame_params) != 0) {
+		bean_free(bean_adev);
+		printf("bean_create: error: Random number failure !\n");
 		return -1;
 	}
 
@@ -72,7 +65,6 @@ int bean_create(struct frame_config *frame_params,
 	printf("\033[%d;%dH", (*bean_adev).column + 8 + 2, 2 * (*bean_adev).row + 30 + 1);
 	printf("%s", bean_adev->bean_shape_params.bean_make);
 	printf("\033[0;0H\n");
-	sleep(1);
 
 	return 0;
 }
@@ -82,4 +74,11 @@ void bean_delete(struct bean_config *bean_adev)
 	printf("\033[%d;%dH", (*bean_adev).column + 8 + 2, 2 * (*bean_adev).row + 30 + 1);
 	printf("%s", bean_adev->bean_shape_params.bean_del);
 	printf("\033[0;0H\n");
+}
+
+void bean_free(struct bean_config *bean_adev)
+{
+	if (bean_adev != NULL) {
+		free(bean_adev);
+	}
 }

@@ -22,7 +22,7 @@
 #define FRAME_LEFT_DISTANCE 30
 
 static struct bean_config *bean_dev = NULL;
-static struct snake_config *snake_dev = NULL;
+static struct snake *snake_dev = NULL;
 
 static struct frame_config frame_default = {
 	.length = FRAME_LENGTH,
@@ -37,7 +37,9 @@ void main(int argc, char const *argv[])
 
 	system("clear");
 
+snake_initialization(&snake_dev);
 
+snake_dev->action.snake_create(snake_dev);
 
 /*
 	res = frame_create(frame_default);
@@ -63,6 +65,6 @@ void main(int argc, char const *argv[])
 	
 done:
 	printf("error, stop running !\n"); 
-*/	
+*/
 	while(1);
 }

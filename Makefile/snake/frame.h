@@ -15,6 +15,8 @@
 
 #include "stdio.h"
 
+#define ROW_DOWN "¯"
+
 #define loop_output(num, end) \
     for (num = 0; num < end; ++num)
 

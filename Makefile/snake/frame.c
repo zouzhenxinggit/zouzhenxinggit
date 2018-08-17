@@ -12,11 +12,11 @@
 
 #define DEBUG
 #include "frame.h"
-
+#define ROW_DOWN "¯"
 static struct map_config map_default = {
 	.limit = {
 		.row_up = MAP_ROW_UP,
-		.row_down = "¯",
+		.row_down = ROW_DOWN,
 		.column = MAP_COLUMN,
 	},
 	.outside = MAP_OUTSIDE,
@@ -29,9 +29,7 @@ int frame_create(struct frame_config frame_params)
 	unsigned int i, j;
 
 	if (frame_params.length < 5 || frame_params.width <  5) {
-#ifdef DEBUG
 		printf("error: space too small !\n");
- #endif
 		return -1;
 	}
 	

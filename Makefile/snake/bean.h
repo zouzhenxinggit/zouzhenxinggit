@@ -43,4 +43,6 @@ int bean_create(struct frame_config *frame_params,
 
 void bean_delete(struct bean_config *bean_adev);
 
+void bean_free(struct bean_config *bean_adev);
+
 #endif
