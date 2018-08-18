@@ -33,6 +33,7 @@ struct snake snake_example= {
 	},
 	.snake_list = NULL,
 	.snake_head = NULL,
+	.snake_move_direction = RIGHT_TO_LEFT,
 };
 
 int snake_initialization(struct snake **snake_adev) 
@@ -125,6 +126,79 @@ void snake_list_tail_add(struct snake *snake_adev,
 }*/
 
 //
+void snake_list_move(struct snake *snake_adev)
+{
+	int i;
+	struct snake_list_node *p_snake_tail = (struct snake_list_node *)snake_adev->snake_tail;
+
+	p_snake_tail->snake_node_list_before->snake_node_list_after = NULL;
+	p_snake_tail->snake_node_list_after = NULL;
+
+	p_snake_tail->snake_node_position.snake_row = \
+		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row;
+	p_snake_tail->snake_node_position.snake_column = \
+		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column;
+
+	p_snake_tail->snake_node_list_after = \
+		((struct snake_list_node *)snake_adev->snake_head)->snake_node_list_after;
+
+	//switch(snake_move_direction)
+	{
+	case LEFT_TO_RIGHT:
+	{
+		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row += 1;
+		break;
+	}
+	case RIGHT_TO_LEFT:
+	{
+		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row -= 1;
+		break;
+	}
+	case UP_TO_BACK:
+	{
+		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position,snake_column += 1;
+		break;
+	}
+	case BACK_TO_UP:
+	{
+		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position,snake_column -=1;
+		break;
+	}
+	default:
+		break;
+	}
+
+	
+	
+
+ 	((struct snake_list_node *)snake_adev->snake_head)->snake_node_list_after = p_snake_tail;
+	//tail node front move
+	snake_adev->snake_tail = \
+		((struct snake_list_node *)snake_adev->snake_tail)->snake_node_list_before;
+
+#ifdef DEBUG
+	printf("------------------------------------------------------------\n");	
+	printf("list : \n%d\n",
+			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_row);
+	printf("%d\n", 
+			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_column);
+
+	printf("head : \n%d\n",
+			((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row);
+	printf("%d\n", 
+			((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column);
+	
+	printf("tail :\n%d\n",
+			((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_row);
+	printf("%d\n", 
+			((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_column);
+
+	printf("p_snake_tail :\n%d\n", p_snake_tail->snake_node_position.snake_row);
+	printf("%d\n", p_snake_tail->snake_node_position.snake_column);
+	printf("------------------------------------------------------------\n");		
+#endif
+}
+
 void snake_list_front_move(struct snake *snake_adev)
 {
 	int i;
@@ -145,39 +219,32 @@ void snake_list_front_move(struct snake *snake_adev)
 	//snake_adev->snake_head->snake_node_position.snake_column
  	((struct snake_list_node *)snake_adev->snake_head)->snake_node_list_after = p_snake_tail;
 
-	//尾节点变成之前的了
-	snake_adev->snake_tail = ((struct snake_list_node *)snake_adev->snake_tail)->snake_node_list_before;
+	//tail node move forward
+	snake_adev->snake_tail = \
+		((struct snake_list_node *)snake_adev->snake_tail)->snake_node_list_before;
 
 #ifdef DEBUG
-	for(i = 0; i < 5; i++) {
-		printf("%d\n", ((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_row);
-		printf("%d\n", ((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_column);
+	printf("------------------------------------------------------------\n");	
+	printf("list : \n%d\n",
+			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_row);
+	printf("%d\n", 
+			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_column);
 
-		snake_adev->snake_list = ((struct snake_list_node *)snake_adev->snake_list)->snake_node_list_after;
-	}
+	printf("head : \n%d\n",
+			((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row);
+	printf("%d\n", 
+			((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column);
+	
+	printf("tail :\n%d\n",
+			((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_row);
+	printf("%d\n", 
+			((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_column);
+
+	printf("p_snake_tail :\n%d\n", p_snake_tail->snake_node_position.snake_row);
+	printf("%d\n", p_snake_tail->snake_node_position.snake_column);
+	printf("------------------------------------------------------------\n");		
 #endif
-printf("------------------------------------------------------------\n");
-
-		printf("list : \n%d\n",
-					((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_row);
-		printf("%d\n", 
-					((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_column);
-
-		printf("head : \n%d\n",
-					((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row);
-		printf("%d\n", 
-					((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column);
-		
-		printf("tail :\n%d\n",
-					((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_row);
-		printf("%d\n", 
-					((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_column);
-
-		printf("p_snake_tail :\n%d\n", p_snake_tail->snake_node_position.snake_row);
-		printf("%d\n", p_snake_tail->snake_node_position.snake_column);
 }
-
-
 
 
 void snake_list_for_each(void) 

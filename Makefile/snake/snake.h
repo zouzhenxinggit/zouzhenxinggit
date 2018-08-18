@@ -24,6 +24,13 @@
 #define SNAKE_DEFAUTE_EAT_BEAD_NUM 0
 #define SNAKE_DEFAUTE_LENGHT 5
 
+enum {
+	LEFT_TO_RIGHT = 0,
+	RIGHT_TO_LEFT = 1,
+	UP_TO_BACK = 2,
+	BACK_TO_UP = 3,
+};
+
 struct snake_body_shape {
 	char *snake_head_shape;
 	char *snake_body_shape;
@@ -34,10 +41,6 @@ struct snake_position {
 	unsigned int snake_row;
 	unsigned int snake_column;
 };
-
-//struct listnode {
-//	struct listnode *snake_list_node ; 
-//};
 
 struct snake_list_node {
 	struct snake_position snake_node_position;
@@ -64,9 +67,10 @@ struct snake {
 	void *snake_list; 
 	void *snake_head;
 	void *snake_tail;
+	unsigned int snake_move_direction;
 };
 
 int snake_initialization(struct snake **snake_adev) ;
 static int snake_list_create(struct snake *snake_adev);
-void snake_list_front_move(struct snake *snake_adev);
+void snake_list_move(struct snake *snake_adev);
 #endif
