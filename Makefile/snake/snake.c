@@ -10,7 +10,7 @@
  * GNU General Public License for more details.
  */
 
-//#define DEBUG
+#define DEBUG
 #include "snake.h"
 
 struct snake snake_example= {
@@ -41,10 +41,11 @@ int snake_initialization(struct snake **snake_adev)
 	*snake_adev = &snake_example;
 
 #ifdef DEBUG
-	printf("%s\n",  (**snake_adev).probe.snake_shape.snake_head_shape);
-	printf("%s\n",  snake_example.probe.snake_shape.snake_body_shape);
-	printf("%s\n",  snake_example.probe.snake_shape.snake_tail_delete_shape);
+	printf("snake_initialization%s\n",  (**snake_adev).probe.snake_shape.snake_head_shape);
+	printf("snake_initialization%s\n",  snake_example.probe.snake_shape.snake_body_shape);
+	printf("snake_initialization%s\n",  snake_example.probe.snake_shape.snake_tail_delete_shape);
 #endif
+
 	return 0;
 }
 
@@ -82,6 +83,10 @@ static int snake_list_create(struct snake *snake_adev)
 
 	for (i = 1; i < snake_adev->probe.snake_lenght; ++i) {
 		p_snake_node = (struct snake_list_node*)malloc(sizeof(struct snake_list_node));
+		if (NULL == p_snake_node) {
+			printf("snake_list_create: error: Failed to allocate memory !\n");
+		return -1;
+	}
 
 		p_tmp->snake_node_list_after = p_snake_node;
 		p_snake_node->snake_node_list_before = p_tmp;
@@ -95,9 +100,9 @@ static int snake_list_create(struct snake *snake_adev)
 		p_tmp = p_snake_node;
 
 #ifdef DEBUG
-		printf("%d\n", p_snake_node->snake_node_list_before->snake_node_position.snake_row);
-		printf("%d\n", p_snake_node->snake_node_list_before->snake_node_position.snake_column);
-		printf("%d\n\n\n\n", p_tmp->num);
+		printf("snake_list_create:%d\n", p_snake_node->snake_node_position.snake_row);
+		printf("snake_list_create:%d\n", p_snake_node->snake_node_position.snake_column);
+		printf("snake_list_create%d\n\n\n\n", p_tmp->num);
 #endif
 	}
 	p_tmp->snake_node_list_after = NULL;
@@ -107,9 +112,12 @@ static int snake_list_create(struct snake *snake_adev)
 
 #ifdef DEBUG
 		printf("---------------------------------------\n");
-		printf("%d\n", ((struct snake_list_node*)snake_adev->snake_tail)->snake_node_position.snake_row);
-		printf("%d\n", ((struct snake_list_node*)snake_adev->snake_tail)->snake_node_position.snake_column);
-		printf("%d\n\n\n\n", ((struct snake_list_node*)snake_adev->snake_tail)->num);
+		printf("snake_list_create%d\n",
+			 ((struct snake_list_node*)snake_adev->snake_tail)->snake_node_position.snake_row);
+		printf("snake_list_create%d\n", 
+			((struct snake_list_node*)snake_adev->snake_tail)->snake_node_position.snake_column);
+		printf("snake_list_create%d\n\n\n\n", 
+			((struct snake_list_node*)snake_adev->snake_tail)->num);
 #endif
 	return 0;
 }
@@ -142,7 +150,8 @@ void snake_list_move(struct snake *snake_adev)
 	p_snake_tail->snake_node_list_after = \
 		((struct snake_list_node *)snake_adev->snake_head)->snake_node_list_after;
 
-	//switch(snake_move_direction)
+	//Snakes move from right to left by default, Can't change direction directly
+	switch(snake_adev->snake_move_direction)
 	{
 	case LEFT_TO_RIGHT:
 	{
@@ -156,20 +165,17 @@ void snake_list_move(struct snake *snake_adev)
 	}
 	case UP_TO_BACK:
 	{
-		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position,snake_column += 1;
+		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column += 1;
 		break;
 	}
 	case BACK_TO_UP:
 	{
-		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position,snake_column -=1;
+		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column -=1;
 		break;
 	}
 	default:
 		break;
 	}
-
-	
-	
 
  	((struct snake_list_node *)snake_adev->snake_head)->snake_node_list_after = p_snake_tail;
 	//tail node front move
@@ -178,150 +184,46 @@ void snake_list_move(struct snake *snake_adev)
 
 #ifdef DEBUG
 	printf("------------------------------------------------------------\n");	
-	printf("list : \n%d\n",
+	printf("snake_list_move: list : \n%d\n",
 			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_row);
-	printf("%d\n", 
+	printf("snake_list_move: %d\n", 
 			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_column);
 
-	printf("head : \n%d\n",
+	printf("snake_list_move: head : \n%d\n",
 			((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row);
-	printf("%d\n", 
+	printf("snake_list_move: %d\n", 
 			((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column);
 	
-	printf("tail :\n%d\n",
+	for (i = 0; i < 5; ++i){
+		printf("snake_list_move: printf list \n");
+		printf("snake_list_move: %d\n",
+			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_row);
+		printf("snake_list_move: %d\n",
+			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_column);
+		printf("snake_list_move: %d\n",
+			((struct snake_list_node *)snake_adev->snake_list)->num);
+
+		snake_adev->snake_list = \
+		((struct snake_list_node *)snake_adev->snake_list)->snake_node_list_after;
+	}
+
+	printf("snake_list_move: tail :\n%d\n",
 			((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_row);
-	printf("%d\n", 
+	printf("snake_list_move: %d\n", 
 			((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_column);
 
-	printf("p_snake_tail :\n%d\n", p_snake_tail->snake_node_position.snake_row);
-	printf("%d\n", p_snake_tail->snake_node_position.snake_column);
+	printf("snake_list_move: p_snake_tail :\n%d\n", p_snake_tail->snake_node_position.snake_row);
+	printf("snake_list_move: %d\n", p_snake_tail->snake_node_position.snake_column);
 	printf("------------------------------------------------------------\n");		
 #endif
 }
 
-void snake_list_front_move(struct snake *snake_adev)
-{
-	int i;
-	struct snake_list_node *p_snake_tail = (struct snake_list_node *)snake_adev->snake_tail;
-
-	p_snake_tail->snake_node_list_before->snake_node_list_after = NULL;
-	p_snake_tail->snake_node_list_after = NULL;
-
-	p_snake_tail->snake_node_position.snake_row = \
-		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row;
-	p_snake_tail->snake_node_position.snake_column = \
-		((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column;
-
-	p_snake_tail->snake_node_list_after = \
-		((struct snake_list_node *)snake_adev->snake_head)->snake_node_list_after;
-
-	((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row -= 1;
-	//snake_adev->snake_head->snake_node_position.snake_column
- 	((struct snake_list_node *)snake_adev->snake_head)->snake_node_list_after = p_snake_tail;
-
-	//tail node move forward
-	snake_adev->snake_tail = \
-		((struct snake_list_node *)snake_adev->snake_tail)->snake_node_list_before;
-
-#ifdef DEBUG
-	printf("------------------------------------------------------------\n");	
-	printf("list : \n%d\n",
-			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_row);
-	printf("%d\n", 
-			((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_column);
-
-	printf("head : \n%d\n",
-			((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row);
-	printf("%d\n", 
-			((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column);
-	
-	printf("tail :\n%d\n",
-			((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_row);
-	printf("%d\n", 
-			((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_column);
-
-	printf("p_snake_tail :\n%d\n", p_snake_tail->snake_node_position.snake_row);
-	printf("%d\n", p_snake_tail->snake_node_position.snake_column);
-	printf("------------------------------------------------------------\n");		
-#endif
-}
-
-
-void snake_list_for_each(void) 
+void snake_list_print_defaute(struct snake_list_node* snake_node)
 {
 
 }
 
-// head - > node -> node _> tail_node 
-//head ->  tail_node -> node -> new _tail_node
-//head ->left node -> node _> tail_node 
-
-void snake_list_move(void)
+void snake_list_print_update(struct snake *snake_adev)
 {
-
+	//shanchu tail printf head + head->after;;
 }
-
-void snake_list_turn_left(void)
-{
-
-}
-
-void snake_list_turn_right(void)
-{
-
-}
-
-
-
-/* 
-int snake_initialization(struct snake_config **snake_adev);
- 
-
-
-2 创建链表 初始化节点2个 方块当蛇身体 这个链表要有头指针
-
-
- 
-3 并挂载自己实现的向左 向右 函数
-
-4.snake run ()
-
-
-
-	
-
-
-在链表上添加尾巴
-
-向左边 链表头节点计算
-
-向右边
-
-
-蛇移动  链表尾巴移动到头指针后
-
-
-
-struct snake {
-	蛇的头和身体的字符串
-	蛇的当前长度
-	蛇吃的掉的豆子number
-
-
-	蛇的初始位置
-
-
-	蛇头的横竖坐标的链表
-	蛇头移动函数
-	蛇行进的速度
-	
-
-	得到头要移动的下一个位置
-} 
-
-初始化bena的时候失败需要释放内存 
-
-主函数只是传一个指针 其他的放在snake里面就好。
-
-打印字符串形式的枚举的变量
-*/
