@@ -76,8 +76,10 @@ static int snake_list_create(struct snake *snake_adev);
 
 void snake_list_move(struct snake *snake_adev);
 
-void snake_list_print_defaute(struct snake_list_node* snake_node);
+void snake_list_print_defaute(struct snake *snake_adev);
 
-void snake_list_print_update(struct snake *snake_adev);
+void snake_list_print_update(struct snake *snake_adev,
+												   struct snake_list_node* snake_node,
+												   const char* snake_shape);
 
 #endif
