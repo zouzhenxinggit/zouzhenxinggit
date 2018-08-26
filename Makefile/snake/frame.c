@@ -24,6 +24,19 @@ static struct map_config map_default = {
 	.change_line = MAP_CHANGE_LINE,
 };
 
+#define FRAME_LENGTH 100 //150
+#define FRAME_WIDTH 20//40
+#define FRAME_UP_DISTANCE 8
+#define FRAME_LEFT_DISTANCE 30
+
+
+static struct frame_config frame_default = {
+	.length = FRAME_LENGTH,
+	.width = FRAME_WIDTH,
+	.up_distance = FRAME_UP_DISTANCE,
+	.left_distance = FRAME_LEFT_DISTANCE,
+};
+
 int frame_create(struct frame_config frame_params)
 {
 	unsigned int i, j;

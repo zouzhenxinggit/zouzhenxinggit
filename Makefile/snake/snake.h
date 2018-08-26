@@ -59,6 +59,8 @@ struct snake_probe {
 struct snake; 
 struct snake_action {
 	int (*snake_create)(struct snake *snake_adev);
+	void (*snake_list_move)(struct snake *snake_adev);
+	int (*snake_list_tail_add)(struct snake *snake_adev);	
 };
 
 struct snake {
@@ -67,6 +69,7 @@ struct snake {
 	void *snake_list; 
 	void *snake_head;
 	void *snake_tail;
+	struct snake_position snake_before_tail;
 	unsigned int snake_move_direction;
 };
 
@@ -82,4 +85,5 @@ void snake_list_print_update(struct snake *snake_adev,
 												   struct snake_list_node* snake_node,
 												   const char* snake_shape);
 
+int snake_list_tail_add(struct snake *snake_adev);
 #endif

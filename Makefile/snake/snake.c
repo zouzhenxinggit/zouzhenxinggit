@@ -30,10 +30,16 @@ struct snake snake_example= {
 	},
 	.action = {
 		.snake_create = snake_list_create,
+		.snake_list_move = snake_list_move,
+		.snake_list_tail_add =  snake_list_tail_add,
 	},
 	.snake_list = NULL,
 	.snake_head = NULL,
-	.snake_move_direction = UP_TO_BACK,
+	.snake_before_tail = {
+		.snake_row = SNAKE_DEFAUTE_ROW - 2 + 5,
+		.snake_column = SNAKE_DEFAUTE_COLUMN -1,
+	},
+	.snake_move_direction = RIGHT_TO_LEFT,
 };
 
 int snake_initialization(struct snake **snake_adev) 
@@ -123,16 +129,51 @@ static int snake_list_create(struct snake *snake_adev)
 	return 0;
 }
 
-/*
-void snake_list_tail_add(struct snake *snake_adev,
-									struct snake_position* snake_pos)
+int snake_list_tail_add(struct snake *snake_adev)
 {
 	struct snake_list_node *p_snake_tail = (struct snake_list_node *)snake_adev->snake_tail;
-	struct snake_list_node *p_snake_node = NULL;
-	struct snake_list_node * p_tmp;
-}*/
+	
+	struct snake_list_node * p_tmp = NULL;
 
-//
+	p_tmp = (struct snake_list_node *)malloc(sizeof(struct snake_list_node));
+	if (NULL == p_tmp) {
+			printf("snake_list_tail_add: error: Failed to allocate memory !\n");
+		return -1;
+	}
+
+	p_tmp->snake_node_position.snake_row = \
+		snake_adev->snake_before_tail.snake_row;
+	p_tmp->snake_node_position.snake_column = \
+		snake_adev->snake_before_tail.snake_column;
+	
+	p_tmp->num =  snake_adev->probe.snake_lenght += 1;
+	snake_adev->probe.snake_eat_bead_num += 1;
+
+#ifdef DEBUG
+	printf("%d\n", p_tmp->num);
+	printf("%d\n", snake_adev->probe.snake_lenght);
+	printf("%d\n", snake_adev->probe.snake_eat_bead_num);
+	printf("%d\n", ((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_row);
+	printf("%d\n", ((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_column);
+	printf("%d\n", snake_adev->snake_before_tail.snake_row);
+	printf("%d\n", snake_adev->snake_before_tail.snake_column);
+#endif	
+
+	p_snake_tail->snake_node_list_after = p_tmp;
+	p_tmp->snake_node_list_before = p_snake_tail;
+	p_tmp->snake_node_list_after = NULL;
+
+	snake_adev->snake_tail = p_tmp;
+
+	snake_list_print_update(snake_adev, 
+	 										 p_tmp,
+	 										  snake_adev->probe.snake_shape.snake_tail_delete_shape); 
+	snake_list_print_update(snake_adev, 
+	 										 p_tmp,
+	 										  snake_adev->probe.snake_shape.snake_head_shape); 
+}
+
+
 void snake_list_move(struct snake *snake_adev)
 {
 	int i;
@@ -145,7 +186,16 @@ void snake_list_move(struct snake *snake_adev)
 	snake_list_print_update(snake_adev, 
 	 										  ((struct snake_list_node *)snake_adev->snake_tail),
 	 										  snake_adev->probe.snake_shape.snake_tail_delete_shape);
+	//save before tail
+	snake_adev->snake_before_tail.snake_row = \
+		((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_row;
+	snake_adev->snake_before_tail.snake_column = \
+		((struct snake_list_node *)snake_adev->snake_tail)->snake_node_position.snake_column;
 
+#ifdef DEBUG
+	printf("%d\n", snake_adev->snake_before_tail.snake_row);
+	printf("%d\n", snake_adev->snake_before_tail.snake_column);
+#endif	
 	//updata snake head befor position
 	snake_list_print_update(snake_adev,
 	 										  ((struct snake_list_node *)snake_adev->snake_head),
@@ -210,16 +260,15 @@ void snake_list_print_defaute(struct snake *snake_adev)
 
 	printf("\033[%d;%dH",
 		 ((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_column + 8 + 2,
-		  2 * ((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_row + 30 + 1);
+		 2 * ((struct snake_list_node *)snake_adev->snake_list)->snake_node_position.snake_row + 30 + 1);
 	printf("%s", snake_adev->probe.snake_shape.snake_head_shape);
 	printf("\033[0;0H\n");
 
 	p_tmp = ((struct snake_list_node *)snake_adev->snake_list)->snake_node_list_after;
 	for (i = 0; i < SNAKE_DEFAUTE_LENGHT - 1; ++i) {
-
 		printf("\033[%d;%dH",
 		 p_tmp->snake_node_position.snake_column + 8 + 2,
-		  2 * p_tmp->snake_node_position.snake_row + 30 + 1);
+		 2 * p_tmp->snake_node_position.snake_row + 30 + 1);
 		printf("%s", snake_adev->probe.snake_shape.snake_body_shape);
 		printf("\033[0;0H\n");
 
@@ -233,7 +282,7 @@ void snake_list_print_update(struct snake *snake_adev,
 {
 	printf("\033[%d;%dH",
 		 ((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_column + 8 + 2,
-		  2 * ((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row + 30 + 1);
+		 2 * ((struct snake_list_node *)snake_adev->snake_head)->snake_node_position.snake_row + 30 + 1);
 	printf("%s", snake_adev->probe.snake_shape.snake_head_shape);
 	printf("\033[0;0H\n");
 
