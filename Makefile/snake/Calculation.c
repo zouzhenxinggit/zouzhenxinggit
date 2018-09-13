@@ -16,6 +16,7 @@
 #include "snake.h"
 #include "bean.h"
 #include "frame.h"
+#include "key.h"
 
 #define FRAME_LENGTH 100 //150
 #define FRAME_WIDTH 20//40
@@ -32,15 +33,22 @@ static struct frame_config frame_default = {
 static struct bean_config *bean_dev = NULL;
 static struct snake *snake_dev = NULL;
 
-char get_direction_from_user(void)
-{
-	return _getch();
-}
-
 void main(int argc, char const *argv[])
 {
 	int res = 0;
-	get_direction_from_user();
+while(1) { //!sleep(1)
+		
+		/*if(get_key_value(1) == 108){
+			snake_dev->action.snake_list_move(snake_dev);
+		}*/
+		get_key_value();
+		//printf("%d\n", res);
+
+		//sleep(1);
+		
+		//break;
+	}
+
 	system("clear");
 
 	snake_initialization(&snake_dev);
@@ -59,15 +67,18 @@ void main(int argc, char const *argv[])
 
 	snake_dev->action.snake_create(snake_dev);
 
+//start :
+	
+
 	//snake_dev->snake_move_direction = RIGHT_TO_LEFT;
-	while(1) {
-		sleep(1);
-		snake_dev->action.snake_list_move(snake_dev);
-		sleep(1);snake_dev->action.snake_list_move(snake_dev);
-		sleep(1);
-		snake_dev->action.snake_list_tail_add(snake_dev);
-		snake_dev->action.snake_list_move(snake_dev);
-	}
+		 printf ("open /dev/input/event3 device error!\n");
+		
+		//sleep(1);snake_dev->action.snake_list_move(snake_dev);
+		//sleep(1);
+		//snake_dev->action.snake_list_tail_add(snake_dev);
+		//snake_dev->action.snake_list_move(snake_dev);
+
+
 
 	while(1);
 done :
