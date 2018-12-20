@@ -18,8 +18,8 @@
 #include "frame.h"
 #include "key.h"
 
-#define FRAME_LENGTH 100 //150
-#define FRAME_WIDTH 20//40
+#define FRAME_LENGTH 150 //150
+#define FRAME_WIDTH 40//40
 #define FRAME_UP_DISTANCE 8
 #define FRAME_LEFT_DISTANCE 30
 
@@ -36,18 +36,18 @@ static struct snake *snake_dev = NULL;
 void main(int argc, char const *argv[])
 {
 	int res = 0;
-while(1) { //!sleep(1)
+///while(1) { //!sleep(1)
 		
 		/*if(get_key_value(1) == 108){
 			snake_dev->action.snake_list_move(snake_dev);
 		}*/
-		get_key_value();
+		///get_key_value();
 		//printf("%d\n", res);
 
 		//sleep(1);
 		
 		//break;
-	}
+///	}
 
 	system("clear");
 
@@ -68,17 +68,17 @@ while(1) { //!sleep(1)
 	snake_dev->action.snake_create(snake_dev);
 
 //start :
-	
+	while(1){
 
-	//snake_dev->snake_move_direction = RIGHT_TO_LEFT;
-		 printf ("open /dev/input/event3 device error!\n");
+	snake_dev->snake_move_direction = RIGHT_TO_LEFT;
+		 //printf ("open /dev/input/event3 device error!\n");
 		
-		//sleep(1);snake_dev->action.snake_list_move(snake_dev);
-		//sleep(1);
-		//snake_dev->action.snake_list_tail_add(snake_dev);
-		//snake_dev->action.snake_list_move(snake_dev);
+		sleep(1);snake_dev->action.snake_list_move(snake_dev);
+		sleep(1);
+		snake_dev->action.snake_list_tail_add(snake_dev);
+		snake_dev->action.snake_list_move(snake_dev);
 
-
+}
 
 	while(1);
 done :

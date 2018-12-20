@@ -1,0 +1,8 @@
+有一个很有意思的现象
+
+就是我在此目录新建operator.py
+
+
+在其他的文件执行遇到错误时 就会自动执行operator.py 还会生成__pycache__
+
+special
