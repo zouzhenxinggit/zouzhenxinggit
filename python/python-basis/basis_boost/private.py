@@ -37,3 +37,47 @@ age = pp.getage()
 print(age)
 
 pp.fun()
+
+
+
+#但有时候我就是想调用私有成员函数怎么办
+#私有成员函数本质就是该函数名 _类名__函数名 找不到就无法调用
+class Test(object):
+	def __func(self):
+		print("__func")
+
+
+print(dir(Test))
+test = Test()
+test._Test__func()
+'''
+['_Test__func',
+ '__class__',
+ '__delattr__',
+ '__dict__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__le__',
+ '__lt__',
+ '__module__',
+ '__ne__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ '__weakref__']
+
+'''
+
+
