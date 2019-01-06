@@ -1,0 +1,4 @@
+这是因为你电脑同时用 Python2.7+ 和3.5+ 版本. 默认pip会使用 2.7+ 版本,而有些库依赖3.5+版本. 
+这时只需要指定使用 3.5+ 对应的pip版本即可.
+
+sudo python3 -m pip install pygame
