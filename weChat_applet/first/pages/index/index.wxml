@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+</view>
+
+
+<!-- audio.wxml -->
+<audio src="{{src}}" id="myAudio"></audio>
+
+<button type="primary" bindtap="audioPlay">播放</button>
+<button type="primary" bindtap="audioPause">暂停</button>
+<button type="primary" bindtap="audio14">设置当前播放时间为57秒</button>
+<button type="primary" bindtap="audioStart">回到开头</button>
+
+
+<scroll-view>
+  <view id="green" class="scroll-view-item bc_green"></view>
+  <view id="red" class="scroll-view-item bc_red"></view>
+  <view id="yellow" class="scroll-view-item bc_yellow"></view>
+  <view id="blue" class="scroll-view-item bc_blue"></view>
+</scroll-view>
+
+<scroll-view>
+    <view id="green" class="scroll-view-item_H bc_green"></view>
+    <view id="red" class="scroll-view-item_H bc_red"></view>
+    <view id="yellow" class="scroll-view-item_H bc_yellow"></view>
+    <view id="blue" class="scroll-view-item_H bc_blue"></view>
+</scroll-view>

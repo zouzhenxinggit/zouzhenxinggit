@@ -1,0 +1,16 @@
+<!--pages/movie/movie.wxml
+<text>pages/movie/movie.wxml</text>
+-->
+
+<scroll-view scroll-y="true">
+    <view class="meta">
+        <image  class="poster" src="{{movie.images.large}}"></image>
+        <text class="title">{{movie.title}}({{movie.year}})</text>
+        <text class="title">评分: {{movie.rating.average}}</text>
+    </view>
+
+    <view class="content">
+        <text class="mov-summary">摘要</text>
+        <text>{{movie.summary}}</text>
+    </view>
+</scroll-view>

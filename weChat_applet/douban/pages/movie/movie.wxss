@@ -1,0 +1,25 @@
+/* pages/movie/movie.wxss */
+.meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 1000rpx;
+    padding: 50rpx 40rpx;
+}
+.poster {
+    width:80%;
+    height: 80%;
+    margin: 20rpx;
+    background-size: "cover";
+}
+
+.title {
+    font-size: 42rpx;
+    color: #444;
+    text-align: center;
+}
+.content {
+    color: #666;
+    font-size: 32rpx;
+    padding: 40rpx;
+}

@@ -1,0 +1,31 @@
+<!--pages/showme/showme.wxml-->
+<text>pages/showme/showme.wxml</text>
+
+<button bindtap='onclikme'>我是一个按钮</button>
+
+<view>{{name}}</view>
+<view>{{age}}</view>
+<view bindtap="viewtap">我是一个窗口</view>
+<view wx:for="{{array}}">{{index}}: {{item}}</view>
+
+<view wx:if="{{flag=='python'}}">"python"</view>
+<view wx:elif="{{flag=='c++'}}">c++</view>
+<view wx:elif="{{flag=='java'}}">java</view>
+<view wx:else>php</view>
+
+<!-- <view id="item-{{id}}"></view> -->
+
+<view>{{obj.myname}}</view>
+<view>{{obj.myage}}</view>
+<view>{{obj}}</view>
+<view>{{array[2]}}</view>
+
+<view bindtap="jumpone">跳转首页</view>
+
+
+<!--
+<navigator url="/pages/logs/logs" targe="miniProgram">跳转到新小程序</navigator>
+ -->
+
+
+
