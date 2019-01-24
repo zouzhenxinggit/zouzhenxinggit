@@ -1,0 +1,38 @@
+从官网下载安装包拷贝复制到/usr/local/下
+官网下载：http://redis.io/download
+安装
+
+tar zxvf redis-5.0.3.tar.gz
+cp redis-5.0.3 /usr/local/
+
+cd redis-5.0.3直接make 编译
+make
+
+sudo make
+sudo make test
+sudo make install 将可执行文件拷贝到/usr/local/bin目录下。这样就可以直接敲名字运行程序了
+
+cd ~ 重要
+sudo redis-server /usr/local/redis-5.0.3/redis.conf
+这里会有很多的警告 上网去查
+
+
+后台运行方法
+#修改redis.conf文件daemonize为yes，即默认以后台程序方式运行
+daemonize no
+
+
+#检测后台进程是否存在
+ps -aux |grep redis
+
+#检测6379端口是否在监听
+netstat -lntp | grep 6379
+
+必须先运行服务在执行 redis-cli
+
+关闭服务
+kill -9 PID
+root     16115  0.1  0.0  66588  3840 ?        Ssl  17:55   0:02 redis-server 127.0.0.1:6379
+
+redis-cli
+https://blog.csdn.net/bao19901210/article/details/51557700

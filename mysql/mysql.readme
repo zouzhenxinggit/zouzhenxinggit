@@ -1,0 +1,367 @@
+登录
+mysql -u zouzhenxing -p 
+zouzhenxing
+mysql -h zouzhenxing-optiplex-3020 -u zouzhenxing -p
+
+
+
+创建用户
+insert into mysql.user(Host,User,Password) values("localhost","test",password("1234"));
+flush privileges;
+这样就创建了一个名为：test 密码为：1234 的用户
+注意：此处的"localhost"，是指该用户只能在本地登录，不能在另外一台机器上远程登录。如果想远程登录的话，将"localhost"改为"%"，表示在任何一台电脑上都可以登录。也可以指定某台机器可以远程登录。
+
+
+
+
+删除用户
+查看所有用户
+use mysql
+SELECT host, user, password FROM user;
+drop user 'test'@'%';
+flush privileges;
+
+
+
+修改名户名
+查看所有用户
+use mysql
+SELECT host, user, password FROM user;
+root改成邹振兴
+update user set user ='zouzhenxing' where user ='root';
+flush privileges;
+
+
+
+修改数据库的登录密码
+查看所有用户
+use mysql
+SELECT host, user, password FROM user;
+update user set password=password('新密码') where user='你的用户名';
+flush privileges;
+
+
+显示账户权限
+show grants;
+
+授权格式：grant 权限 on 数据库.* to 用户名@登录主机 identified by "密码";
+grant all privileges on testDB.* to test@localhost identified by '1234';
+grant all privileges on testDB.* to test@localhost
+grant all privileges on *.* to 'root'@'%' identified by 'zouzhenxing' with grant option;
+grant all privileges on *.* to 'zouzhenxing'@'localhost' identified by 'zouzhenxing' with grant option;
+flush privileges;
+
+WITH GRANT OPTION 这个选项表示该用户可以将自己拥有的权限授权给别人。注意：经常有人在创建操作用户的时候不指定WITH GRANT OPTION选项导致后来该用户不能使用GRANT命令创建用户或者给其它用户授权。 
+如果不想这个用户有这个grant的权限，可以不加这句
+
+
+
+
+
+
+
+
+
+数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作
+数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作
+数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作
+数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作数据库操作
+
+创建数据库 
+create database test charset=utf8;  设置字符集
+删除数据库
+drop database test;
+
+
+列出所有数据库
+show databases;
+
+切换数据库
+mysql>use '数据库名';
+
+
+
+
+
+
+
+表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作
+表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作
+表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作
+表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作
+表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作表操作
+
+查看表中内容
+select * from 表名;
+
+查看表属性
+describe 表名
+desc 表名
+
+
+创建表
+create table test(
+	id int not null primary key auto_increment,
+	name varchar(10) not null,
+	gender bit default 1,
+	bitthday datetime,
+	isDelete bit default 0
+);
+
+删除表 
+drop table 表名 
+
+列出所有表
+show tables;
+
+显示数据表结构
+describe 表名;
+
+直接跳转到类似于空指针的地方 也就是不用数据库
+select database();
+
+修改表
+alter table 表名 add|change|drop 列名 类型;
+如：
+alter table students add birthday datetime;
+alter table test add xxx varchar(20);
+alter table 表名 change 原列名 新列名  类型；
+
+
+更改表名称
+rename table 原表名 to 新表名;
+查看表的创建语句
+show create table '表名';
+
+
+
+
+
+数据操作数据操作数据操作数据操作数据操作数据操作数据操作数据操作
+数据操作数据操作数据操作数据操作数据操作数据操作数据操作数据操作
+数据操作数据操作数据操作数据操作数据操作数据操作数据操作数据操作
+数据操作数据操作数据操作数据操作数据操作数据操作数据操作数据操作
+数据操作数据操作数据操作数据操作数据操作数据操作数据操作数据操作
+数据操作数据操作数据操作数据操作数据操作数据操作数据操作数据操作
+
+
+插入数据
+全列插入：insert into test values(0,"邹振兴",1,"1996-10-15",0)
+缺省插入：insert into test(name,birthday) values("何纬朝","1995-01-01");
+同时插入多条数据 insert into test(name,birthday) values("老王",'1980-01-02'),("老宋",'1960-02-05');
+
+修改数据
+update 表名 set 列1=值1,... where 条件
+update test set name="老蔡" where id= 3
+
+数据的删除(真实删除+逻辑删除)
+delete from 表名 where 条件(bu+条件全删)
+
+逻辑删除
+update test set isDelete=1 where id =3;
+select * from test where isDelete=0;
+
+
+
+备份数据库
+sudo su
+mysql -uroot –p 数据库名 > ~	/desktop/备份文件.sql;
+创建数据库
+mysql -uroot -p study_backup < back.sql 
+
+
+
+是啊，user表中不是有三个用户的吗。一个localhost，一个127.0.0.1，一个::1，其实这三个都是一个意思，都是表示本地机。它三个密码不都一样的嘛，你用这三个都可以登录数据库的。
+ipv6中如果前面全是0，可以缩写，所以就成了::1这个德行，其实和loclhost一样还是指本机。
+
+
+mysql> SELECT host, user, password FROM user;
++---------------------------+------------------+-------------------------------------------+
+| host                      | user             | password                                  |
++---------------------------+------------------+-------------------------------------------+
+| zouzhenxing-optiplex-3020 | zouzhenxing      | *D358A2B4761D566B52303B9676A03A719B5009DF |
+| 127.0.0.1                 | zouzhenxing      | *D358A2B4761D566B52303B9676A03A719B5009DF |
+| ::1                       | zouzhenxing      | *D358A2B4761D566B52303B9676A03A719B5009DF |
+| localhost                 | debian-sys-maint | *9C9F754B3DA8DB60A192DB843EFF6BBAEE6BB583 |
+| %                         | root             | *D358A2B4761D566B52303B9676A03A719B5009DF |
+| localhost                 | zouzhenxing      | *D358A2B4761D566B52303B9676A03A719B5009DF |
++---------------------------+------------------+-------------------------------------------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询
+查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询
+查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询
+查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询
+查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询查询
+
+
+
+消除重复行
+
+select distinct字段,字段 from 表名;
+
+条件查询
+select * from test where xxx or xxx
+select * from test where xxx and xxx
+
+模糊查询
+%表示任意多个任意字符
+_表示一个任意字符
+select * from test where name like "老_" or name like "邹%";
+select * from test where name like "邹%" and birthday like "1996%"
+
+范围查询
+in 非连续范围
+select * from test where id in(2,4);
+select * from test where id between 2 and 4 and gender =1;
+
+空判断
+is null
+is not null
+
+聚合
+select avg(id) from test;
+select sum(id) from test;
+select max(id) from test;
+select min(id) from test;
+select count(*) from test;
+
+
+分组 为了更好的统计
+select gender as 性别,count(*) from test group by gender;
+分组后的数据筛选
+select isDelete as 性别,count(*) from test group by isDelete having isDelete = 0;
+mysql> select gender as 性别,min(id) from test group by gender;
+对比where与having
+where是对from后面指定的表进行数据筛选，属于对原始数据的筛选
+having是对group by的结果进行筛选
+select isDelete,count(*) from test where isDelete =0 group by isDelete
+
+
+排序
+select * from test where gender=1 and isDelete!=1 order by id desc;
+将行数据按照列1进行排序，如果某些行列1的值相同时，则按照列2排序，以此类推
+asc从小到大排列，即升序
+desc从大到小排序，即降序
+
+分页
+select * from test where isDelete=0 limit 0,2;
+从start开始，获取count条数据
+start索引从0开始
+
+
+关系 第三范式(引用主键) 外键
+create table soc(
+    -> id int not null primary key auto_increment,
+    -> stu_id int(10) unsigned,
+    -> sub_id int, 
+    -> socre decimal(5,2),
+    -> foreign key(stu_id) references stu(id),
+    -> foreign key(sub_id) references sub(id))
+    -> ;
+
+创建表之后再定义约束
+alter table scores add constraint stu_sco foreign key(stuid) references students(id) on delete cascade;
+add constraint stu_sco 添加约束名 随便起
+级联操作的类型包括：
+restrict（限制）：默认值，抛异常
+cascade（级联）：如果主表的记录删掉，则从表中相关联的记录都将被删除
+set null：将外键设置为空
+no action：什么都不做
+
+
+
+连接查询 
+从多张表中查询数据
+前提是得有关系啊 没关系不是白差了
+select name,title,socre from soc inner join stu on soc.stu_id=stu.id inner join sub on soc.sub_id=sub.id where gender=0;
+inner join 左右完全匹配才会出现
+
+连接查询分类如下：
+表A inner join 表B：表A与表B匹配的行会出现在结果中
+表A left join 表B：表A与表B匹配的行会出现在结果中，外加表A中独有的数据，未对应的数据使用null填充
+表A right join 表B：表A与表B匹配的行会出现在结果中，外加表B中独有的数据，未对应的数据使用null填充
+
+查询学生的姓名、平均分
+select name,(socre) from soc INNER JOIN stu on soc.stu_id=stu.id group by name
+
+查询男生的姓名、总分
+select name,sum(socre) from soc inner join stu on soc.stu_id=stu.id where gender=1 GROUP BY name
+
+查询科目的名称、平均分
+select title,avg(socre) from soc INNER JOIN sub on soc.sub_id=sub.id GROUP BY title
+
+查询未删除科目的名称、最高分、平均分
+select title,max(socre),avg(socre) from soc inner join sub on soc.sub_id=sub.id where isDelete=0 group by title
+
+
+自连接
+select * from areas as sheng inner join areas as shi on sheng.id=shi.pid where sheng.title='山西省'
+查询黑龙江省 所有市区县
+select * from areas as sheng INNER JOIN areas as shi on sheng.id = shi.pid inner join areas as qu on shi.id = qu.pid where sheng.title="黑龙江省"
+
+
+子查询
+ 查询支持嵌套使用
+select * from areas where pid=(select id from areas where title="哈尔滨市") ; 
+select * from areas where pid in (select id from areas where title="哈尔滨市" or title="淄博市") ;
+
+alter view soc_stu_sub as
+select soc.* from soc
+inner join stu on soc.stu_id=stu.id
+inner join sub on soc.sub_id=sub.id
+
+
+create view soc_stu_sub as
+select soc.* from soc
+inner join stu on soc.stu_id=stu.id
+inner join sub on soc.sub_id=sub.id
+
+alter view soc_stu_sub as
+select soc.* from soc
+inner join stu on soc.stu_id=stu.id
+inner join sub on soc.sub_id=sub.id
+
+
+
+
+
+当一个业务逻辑需要多个sql完成时，如果其中某条sql语句出错，则希望整个操作都退回
+使用事务可以完成退回的功能，保证业务逻辑的正确性
+要求：表的类型必须是innodb或bdb类型，才可以对此表使用事务
+
+查看表的创建语句
+show create table students;
+
+修改表的类型
+alter table '表名' engine=innodb;
+
+事务语句
+开启begin;
+提交commit;
+回滚rollback;
+
+
+
+
+
+char和varchar的区别
+
+
+char 字符串存储是定长的 会用空格占位	读写开销小
+varchar 字符串长度是可变的	不会占位 读写开销大
+
+
+从sql文件中导入数据
+进入mysql 
+use 数据库
+创建一个新表areas
+然后source areas.sql
+
+
+source

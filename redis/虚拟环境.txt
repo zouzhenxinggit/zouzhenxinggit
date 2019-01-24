@@ -1,0 +1,3 @@
+创建虚拟环境 workon xx
+
+退出虚拟环境 deactivate

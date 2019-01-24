@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#codinf=utf-8
+#coding=utf-8
 
 print("pass_parametes")
 

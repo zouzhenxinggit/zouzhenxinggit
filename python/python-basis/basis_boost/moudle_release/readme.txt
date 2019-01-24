@@ -34,3 +34,5 @@ from 包名 import 模块名或者*
 
 安装包的位置（可删除）
 /usr/local/lib/python2.7/dist-packages
+
+/usr/lib/python3.4

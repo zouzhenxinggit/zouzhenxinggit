@@ -1,0 +1,14 @@
+MySQLdb只能支持py2
+
+安装方法sudo apt-get install python-mysqldb
+
+
+
+
+MySQLdb也能安装在py3上 但是不好使
+pip3 install Mysql-Tool
+pip3 uninstall mysqlclient
+
+安装提示ImportError: No module named 'ConfigParser'
+/usr/lib/python3.4$ sudo cp configparser.py ConfigParser.py
+

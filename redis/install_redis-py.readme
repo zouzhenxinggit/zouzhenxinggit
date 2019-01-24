@@ -1,0 +1,15 @@
+python2
+sudo pip install redis
+
+
+
+python3
+官网下载
+https://github.com/andymccurdy/redis-py
+cd redis-py-master
+sudo python3 setup.py install
+
+
+测试
+ipython3 
+import redis

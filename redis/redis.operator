@@ -1,0 +1,155 @@
+https://redis.io/commands 所有的命令都可以查到
+
+存储的数据类型
+string	存储二进制安全的数据
+hash 对象,字典
+list 列表
+set 无序列表
+zset 有序列表
+
+设置键值
+set t1 hello world
+get t1
+
+set t1 123 覆盖
+get t1
+
+删除 
+del t1
+
+
+设置键值以及过期时间 以秒为单位
+SETEX key second value
+SETEX key 5 abc
+
+一次设置多个键值
+mset t2 abc t3 456
+
+获取键值 不存在返回nil
+GET key
+
+获取多个键值
+MGET key t1 t2
+
+
+运算
++1
+incr t1
+
++n=1000
+incrby t1 1000
+
+-1
+decr t1
+
+-n=100
+decrby t1 1000
+
+追加
+append key value
+append t1 abc
+
+获取长度
+strlen key
+strlen t1
+
+
+
+键的命令
+查看键值
+keys *
+keys t*
+
+判断键是否存在
+EXISTS key [key ...]
+
+查看键对应的values的类型
+TYPE key
+
+删除键以及对应的值
+
+DEL ket  [key ...]
+
+设置过期时间
+expire key seconds
+
+查看有效时间
+TTL key 返回-2表示没有
+
+
+
+设置单个值
+hset t4 name abc
+hget t4 name 
+
+获取所有的值
+hvals t4
+
+获取所有属性
+hkeys t4
+
+得到属性+值
+hgetall t4
+
+从列表左侧插入
+lpush t5 1 2 3
+
+获得列表从头到尾
+lrange t5 0 -1
+
+在列表2前插入
+linsert t3 before 2 value
+
+
+截取列表
+ltrim ker start top
+
+从左侧删除
+lpop t5
+lpop t5
+
+
+zadd t6 1 a1
+zadd t6 2 a2
+zadd t6 1.1 a11
+zadd t6 3 a3
+按照 1 1.1 2 3 进行排序
+
+
+
+
+
+发布订阅  发送方和接收放是分离的
+订阅 频道t1
+SUBSCRIBE t1
+推送频道消息t1
+publish t1 abc
+
+取消订阅
+unsubscribe t1 
+
+redis 主从配置
+从会复制主机的信息
+
+
+主从模式配置
+主机修改 从机器复制
+两台机器 每一台机器都修改配置文件
+band 自己的ip
+
+想让谁是从就在这句话后边+
+slaveof  主机ip 端口        意思就是指定属于别人的从
+端口默认 6379
+
+
+例子 
+主
+bind 192.168.0.100
+
+从
+bind 192.168.0.101
+slaveof 192.168.0.100 6379
+
+
+
+
