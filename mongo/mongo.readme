@@ -1,0 +1,72 @@
+https://blog.csdn.net/fanxin_i/article/details/86006405
+
+开启服务
+sudo /usr/local/mongodb/bin/mongod -config /usr/local/mongodb/bin/mongodb.conf
+
+配置文件
+vim /usr/local/mongodb/bin/mongodb.conf
+
+
+将解压后的文件夹移动到/usr/local/的mongodb目录下
+
+修改环境变量
+vim ~/.bashrc
+添加
+export MONGODB_HOME=/usr/local/mongodb  
+export PATH=$PATH:$MONGODB_HOME/bin
+
+
+关闭mongodb
+在shell下关闭mongodb（必须在admin数据库中使用该命令）
+db.shutdownServer();
+
+
+
+用户设置用户设置用户设置
+超级管理员
+use admin
+db.createUser({ user:'root',pwd:"zouzhenxing",roles:[{role:'root',db:'admin'}] })
+mongodb.conf开启安全认证
+
+查看用户
+show users
+
+登录
+mongo -u root -p zouzhenxing --authenticationDatabase 'admin'
+
+普通用户管理
+先登录超级管理员
+
+use test使用要创建用户的数据库
+show users
+
+创建普通用户
+db.createUser({ user:'zouzhenxing', pwd:'zouzhenxing', roles:[{role:'readWrite',db:'test'}]})
+mongo -u zouzhenxing -p zouzhenxing --authenticationDatabase 'test'
+
+
+修改密码
+db.updateUser('zouzhenxing',{pwd:'zouzhenxing'})
+
+如果忘记密码 可以关闭安全认证
+然后use admin
+db.system.users.remove去清除数据
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
