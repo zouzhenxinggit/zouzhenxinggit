@@ -54,19 +54,9 @@ db.system.users.remove去清除数据
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+使用-h连接时需修改bind_ip = 0.0.0.0
+备份数据
+sudo /usr/local/mongodb/bin/mongodump --host 192.168.0.100:27017 -u zouzhenxing -p zouzhenxing --authenticationDatabase='test' -d test -o ~/Desktop/test1bak/
+只有root权限才能新建数据库
+sudo /usr/local/mongodb/bin/mongorestore -h 192.168.0.100:27017 -u root -p zouzhenxing --authenticationDatabase='admin' -d test4 --dir ~/Desktop/test1bak/test
 
