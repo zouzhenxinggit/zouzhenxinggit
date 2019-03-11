@@ -246,6 +246,7 @@ select isDelete,count(*) from test where isDelete =0 group by isDelete
 排序
 select * from test where gender=1 and isDelete!=1 order by id desc;
 将行数据按照列1进行排序，如果某些行列1的值相同时，则按照列2排序，以此类推
+默认按照列值从小到大排列
 asc从小到大排列，即升序
 desc从大到小排序，即降序
 
