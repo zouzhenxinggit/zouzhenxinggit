@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h6> zouzhenxing </h6>
+{#    <h6> {{ title }} </h6>#}
+
+    <ul>
+        {% for foo in list %}
+            <li>
+                <a href= "show/{{foo.id}}"> {{ foo.btitle }} </a>
+{#                <a href= "https://www.baidu.com"> {{ foo.btitle }} </a>#}
+            </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
