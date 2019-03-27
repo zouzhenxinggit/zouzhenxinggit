@@ -102,5 +102,10 @@ python manage.py createsuperuser
 
 视图
 网页显示
+添加视图目录
+TEMPLATES = [
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+
+
 
 模板

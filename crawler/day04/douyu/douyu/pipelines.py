@@ -12,7 +12,7 @@ import os
 
 
 class DouyuPipeline(ImagesPipeline):
-	   # 获取settings文件里设置的变量值
+	# 获取settings文件里设置的变量值
 	IMAGES_STORE = get_project_settings().get("IMAGES_STORE")
 
 	# def process_item(self, item, spider):
