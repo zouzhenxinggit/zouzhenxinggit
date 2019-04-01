@@ -74,6 +74,8 @@ from datetime import datetime
 
 from booktest.models import BookInfo
 
+BookInfo.books2.all()
+
 b = BookInfo.books2.create("abc", datetime(2019,3,19))
 
 b = BookInfo.create("abc", datetime(2019,3,19))
@@ -84,12 +86,8 @@ b = BookInfo.create("abc", datetime(2019,3,19))
 
 查询
 
-
 查询返回的数据叫查询集
 查询的方法叫过滤器
-
-
-
 
 [16:46]@-Inspiron-3543:~/zouzhenxing_study_project/django/test2$ python2.7 manage.py createsuperuser
 Username (leave blank to use 'zouzhenxing'): zouzhenxing
@@ -101,65 +99,81 @@ Password (again):
 Superuser created successfully.
 
 
+查询集 和 过滤器 基于管理器
+
+通过过滤器查询的结果叫查询集
+过滤器
+all() 查询所有 all就调用了管理器的get_queryset方法
+filter() 过滤
+BookInfo.books2.filter(isDelete = 0, id = 2)
+exclude() 反过滤
+BookInfo.books2.exclude(isDelete = 0, id = 2)
+order_by() 排序
+BookInfo.books1.order_by()
+values() 一个对象返回成一个字典 用列表返回
+BookInfo.books1.values()
 
 
+返回单个值的方法
+get()：返回单个满足条件的对象
+如果未找到会引发"模型类.DoesNotExist"异常
+如果多条被返回，会引发"模型类.MultipleObjectsReturned"异常
+count()：返回当前查询的总条数
+BookInfo.books2.count()
+first()：返回第一个对象
+BookInfo.books2.first()
+last()：返回最后一个对象
+BookInfo.books2.last()
+exists()：判断查询集中是否有数据，如果有则返回True
+BookInfo.books2.exists()
 
+限制查询集
+BookInfo.books1.filter()[0:1].get()
 
+查询集的缓存
+查询集是有缓存的
 
+字段查询
+判断等于 大小写敏感 可以省略
+keyushengluelter(isDelete__exact=0)
+判断包含 大小写敏感
+BookInfo.books2.filter(btitle__contains = '八')
+以value开头或结尾 大小写敏感
+startswith endswith
+BookInfo.books2.filter(btitle__startswith = '天')
+BookInfo.books2.filter(btitle__endswith = '传')
+是否为null
+isnull isnotnull
+BookInfo.books2.filter(btitle__isnull = False)
+BookInfo.books2.filter(btitle__isnull = True)
 
-#coding=utf-8
+在前面加个i表示不区分大小写 如iexact icontains istarswith iendswith
 
-from django.db import models
+in：是否包含在范围内
+BookInfo.books2.filter(id__in = [1,2,3,4,5,6])
+大于 大于等于 小于 小于等于 不等于
+gt gte lt lte
+对日期间类型的属性进行运算
+year month day week_day hour minute second：
+BookInfo.books2.filter(bpub_date__year = 1980)
+BookInfo.books2.filter(bpub_date__gt = datetime(1995,4,1))
 
-# Create your models here.
+BookInfo.books2.filter(heroinfo__hcontent__contains='八')
+pk = id
+BookInfo.books2.filter(pk = 3)
 
-# 通过重写管理器manager类里的get_queryset方法去实现查询
-class BookInfoManager(models.Manager):
-    def get_queryset(self):
-        return super(BookInfoManager, self).get_queryset().filter(id=3)#isDelete=False)
+聚合 F Q
+from django.db.models import Max ,F ,Q
+Avg,Count,Max,Min,Sum
 
-    # 自定义创建模型类对象方法
-    def create(self, btitle, bpub_date):
-        b = BookInfo()
-        b.btitle = btitle
-        b.bpub_date = bpub_date
-        b.bread = 0
-        b.bcommet = 0
-        b.isDelete = False
-        return b
+F 可以使用模型的字段A与字段B进行比较
+BookInfo.books2.aggregate(Count('bpub_date'))
+BookInfo.books2.aggregate(Max('bpub_date'))
+BookInfo.books2.filter(heroinfo__pk__lt = F('bread'))
 
+Q 需要进行or查询，使用Q()对象
+BookInfo.books2.filter(Q(pk__gt = 2) & Q(isDelete=False)) 可以简写filter(xx,xx)
+BookInfo.books2.filter(Q(pk__gt = 2) | Q(isDelete=False))
 
-
-class BookInfo(models.Model):
-    btitle = models.CharField(max_length = 20)
-    bpub_date = models.DateField()
-    bread = models.IntegerField(default=0)
-    bcommet = models.IntegerField(default=0)
-    isDelete = models.BooleanField(default=False)
-    class Meta():
-        db_table = 'bookinfo'
-        # ordering = ['id']
-        # ordering = ['-id']
-
-    # 默认定义管理类对象
-    books1 = models.Manager()
-
-    # 自定义管理类对象
-    books2 = BookInfoManager()
-
-    @classmethod
-    def create(self, btitle, bpub_date):
-        b = BookInfo()
-        b.btitle = btitle
-        b.bpub_date = bpub_date
-        b.bread = 0
-        b.bcommet = 0
-        b.isDelete = False
-        return b
-
-class HeroInfo(models.Model):
-    hname = models.CharField(max_length=20)
-    hgender = models.BooleanField(default=True)
-    isDelete = models.BooleanField(default=False)
-    hcontent = models.CharField(max_length=100)
-    hbook = models.ForeignKey('BookInfo')
+&|~结合括号进行分组 构造复杂的Q对象
+BookInfo.books2.filter(~Q(pk__gt = 1))
