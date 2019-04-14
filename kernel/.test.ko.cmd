@@ -1,0 +1,1 @@
+cmd_/home/zouzhenxing/zouzhenxing_study_project/kernel/test.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/zouzhenxing/zouzhenxing_study_project/kernel/test.ko /home/zouzhenxing/zouzhenxing_study_project/kernel/test.o /home/zouzhenxing/zouzhenxing_study_project/kernel/test.mod.o
