@@ -63,6 +63,12 @@ private:
     int m_len;
     char *m_ptr;
 
+public:
+	char* &getPtr();
+
+public:
+	DeepCopy &operator =(const DeepCopy &obj);
+
 };
 
 #endif // DEEP_COPY_H

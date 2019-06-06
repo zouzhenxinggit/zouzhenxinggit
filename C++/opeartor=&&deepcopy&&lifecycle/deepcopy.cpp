@@ -47,28 +47,49 @@ DeepCopy::DeepCopy()
 
 DeepCopy::DeepCopy(void  *m_str, int len) 
 {
-    m_ptr = (char *)malloc(len + 1);
-    strcpy(m_ptr, (char*)"m_str");
-    m_len = len;
+	m_ptr = (char *)malloc(len + 1);
+	strcpy(m_ptr, (char*)"m_str");
+	m_len = len;
 
-    cout << "有参构造" << FUNNAME << endl;
+	cout << "有参构造" << FUNNAME << endl;
 }
 
 DeepCopy::DeepCopy(const DeepCopy & obj)
 {
-    m_ptr = (char *)malloc(obj.m_len + 1);
-    strcpy(m_ptr, obj.m_ptr);
-    m_len = obj.m_len;
+	m_ptr = (char *)malloc(obj.m_len + 1);
+	strcpy(m_ptr, obj.m_ptr);
+	m_len = obj.m_len;
 
-    cout << "拷贝构造" << FUNNAME << endl;
+	cout << "拷贝构造" << FUNNAME << endl;
 }
 
 DeepCopy::~DeepCopy()
 {
-    if (NULL != m_ptr) {
-            free(m_ptr);
-            m_ptr = NULL;
-    }
+	if (NULL != m_ptr) {
+			free(m_ptr);
+			m_ptr = NULL;
+	}
 
-    cout << FUNNAME << endl;
+	cout << FUNNAME << endl;
+}
+
+char* &DeepCopy::getPtr()
+{
+	return m_ptr;
+}
+
+DeepCopy &DeepCopy::operator =(const DeepCopy &obj)
+{
+	if (NULL != m_ptr) {
+		free(m_ptr);
+		m_ptr = NULL;
+	}
+
+	m_ptr = (char *)malloc(obj.m_len + 1);
+	strcpy(m_ptr, obj.m_ptr);
+	m_len = obj.m_len;
+
+	cout << "重载" << FUNNAME << endl;
+
+	return *this;
 }
