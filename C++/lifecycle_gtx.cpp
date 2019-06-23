@@ -9,6 +9,11 @@ public:
 	friend void modify(A & ptr, int a);
 
 public:
+	static void print_mem() { //类的静态成员函数只能访问类的静态属性因为静态二字，是类共有的
+		cout << sta << endl;
+	}
+
+public:
 	A(int a)
 	{
 		this->a = a;
@@ -39,7 +44,7 @@ protected:
 class B : public A
 {
 public:
-	B(int a, int b): A(b),  objectA(a)
+	B(int a, int b): A(b),  objectA(a) //先初始化父类的内存 在初始化自己的内存 如果不加继承初始化列表, 那么父类A没机会调用自己的拷贝构造函数
 	{
 		cout << "B" << endl;
 	}
@@ -59,7 +64,7 @@ public:
 	{
 		p.a = a;
 	}
-	void chengefatherstaticmem()
+	void chengefatherstaticmem() //静态变量遵循类的访问控制符
 	{
 		cout << A::sta << endl;
 		A::sta = 1;
