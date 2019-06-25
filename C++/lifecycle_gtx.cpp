@@ -25,16 +25,20 @@ public:
 		this->a = a.get_a();
 		cout << "copy A" << this->a << endl;
 	}
+
 	~A()
 	{
 		cout << "~A" << this->a << endl;
 	}
+
 	int get_a() const
 	{
 		return this->a;
 	}
+
 protected:
 	static int sta;
+
 private:
 	int a;
 
@@ -48,33 +52,41 @@ public:
 	{
 		cout << "B" << endl;
 	}
+
 	~B()
 	{
 		cout << "~B"  << endl;
 	}
+
 	void setobjectA(int a)
 	{
 		objectA.a = a;
 	}
+
 	A get_objectA()
 	{
 		return this->objectA;	//这里调用拷贝构造函数返回匿名对象
 	}
+
 	void setAprivate(A & p, int a)
 	{
 		p.a = a;
 	}
+
 	void chengefatherstaticmem() //静态变量遵循类的访问控制符
 	{
 		cout << A::sta << endl;
 		A::sta = 1;
 		cout << A::sta << endl;
 	}
+
 private:
 	A objectA;
+
 protected:
-	
+
 };
+
 void modify(A & ptr, int a)
 {
 	ptr.a = a;
