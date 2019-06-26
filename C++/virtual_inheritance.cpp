@@ -8,15 +8,15 @@ public:
 	int all;
 };
 
-// class A: virtual public ALL
-class A: public ALL
+class A: virtual public ALL
+// class A: public ALL
 {
 public:
 	int a;
 };
 
-// class B: virtual public ALL
-class B: public ALL
+class B: virtual public ALL
+// class B: public ALL
 {
 public:
 	int a;
@@ -27,6 +27,8 @@ class C: public A, public B
 public:
 	int c;
 };
+
+
 
 int main(int argc, char const *argv[])
 {
@@ -39,6 +41,8 @@ int main(int argc, char const *argv[])
 
 	//虚继承
 	c.all = 10;
+
+	cout << sizeof(A) <<endl;
 
 	return 0;
 }
