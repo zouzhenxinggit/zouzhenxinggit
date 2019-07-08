@@ -8,13 +8,13 @@ public:
 	int all;
 };
 
-class A: virtual public ALL
+class A:    public virtual ALL
 {
 public:
 	int a;
 };
 
-class B: virtual public ALL
+class B:    public virtual ALL
 {
 public:
 	int b;
@@ -38,35 +38,37 @@ public:
 	int d;
 };
 
- // class E: public  B, public virtual A
-  class E: public virtual A, public  B
+class E: public virtual  A,  public   B
 {
 public:
 	int e;
 };
 
-#include<stdio.h>
-
+#include <stdio.h>
 int main(int argc, char const *argv[])
 {
-	// E c;
-	// c.e = 1;
-	// c.a = 2;
-	// c.b = 3;
-	// c.all = 4;
 
-	// int *p = (int*)&(c);
+// cout << sizeof(A) << endl;
+// cout << sizeof(B) << endl;
+// cout << sizeof(C) << endl;
+cout << sizeof(E) << endl;
+// cout << sizeof(D) << endl;
+// cout << sizeof(E) << endl;
+E c;
+c.a = 1;
+c.b = 2;
 
-	// while(1) {
-	// 	cout << *p << endl;
-	// 	p++;
-	// 	getchar();
-	// }
+c.e = 4;
+// c.c = 4;
+c.all = 5;
 
-	// cout << sizeof(C) << endl;
-	// cout << sizeof(CC) << endl;
-	// cout << sizeof(D) << endl;
-	cout << sizeof(E) << endl;
-	return 0;
+int *p = (int*)&c;
+while(getchar())
+{
+	cout << *p << endl;
+	p++;
 }
 
+
+return 0;
+}
