@@ -14,15 +14,15 @@ public:
     this->a = a;
   }
 
-  ~father ()
+  virtual ~father ()
   {
-
+    cout << "~father" << endl;
   }
 
 public:
-  void printf(/* arguments */)
+  virtual void printf()
   {
-    cout << "i'm father" << endl;
+    cout << "i'm father, not acc" << endl;
   }
 };
 
@@ -38,62 +38,44 @@ public:
     this->a = a;
   }
 
-  ~child ()
+  virtual ~child () // virtual子类可省略
   {
-
+    cout << "~child" << endl;
   }
 
 public:
-  void printf(/* arguments */)
+  virtual void printf()
   {
-    cout << "i'm child" << endl;
+    cout << "i'm child not acc" << endl;// virtual子类可省略
   }
 };
 
+void stage(father* &p)
+{
+  delete p;
+  while (1) {
+    /* code */
+  }
+}
 
 int main(int argc, char const *argv[]) {
+
+  // 1.继承
+  // 2.需函数重写(参数个数，类型相同)
+  // 3.父类指针或引用指向父类对象或子类对象 会有不同的调用方式
+
   /* code */
   father f(6);
   child c(10);
 
-  cout << c.father::a << endl;
-  cout << c.child::a << endl;
+  father *pf = &f;
+  pf->printf();
 
-  c.a = 7;
-  c.printf();
-  c.father::printf();
+  father *pc = &c;
+  pc->printf();
 
-  cout << c.father::a << endl;
-  cout << c.child::a << endl;
-
-// 说明了没有多态，父类指针指向子类对象的父类部分
-  father *p = NULL;
-  p = &f;
-  p->printf();
-
-  p = &c;
-  p->printf();
-
-// 子类对象是一种特殊的父类
-// 父类可不是特殊的子类
-// 没有虚函数，父类指针和父类引用只指向子类的父类部分
-// 没有虚函数，子类指针和父类引用只指向子类的子类部分
-
-  child *pc = NULL;
-  pc = &c;
-  cout << sizeof(*pc) << endl;
-  pc.printf();
-
-// 父类引用父类，子类对象
-// 只能引用自己类型的内存
-  father &p1 = f;
-  p1.printf();
-
-  father &p2 = c;
-  p2.printf();
-
-  child &p3 = c;
-  p3.printf();
-
+  // 虚析构函数
+  father *nf = new child(10);
+  stage(nf);
   return 0;
 }
