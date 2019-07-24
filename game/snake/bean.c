@@ -36,7 +36,7 @@ int bean_initialization(struct bean_config **bean_adev)
 	srand((unsigned)time(NULL));
 	bean_tmp = (struct bean_config*) malloc (sizeof(struct bean_config));
 
-	if (NULL == bean_tmp){
+	if (NULL == bean_tmp) {
 		printf("bean_initialization: error: Failed to allocate memory !\n");
 		return -1;
 	}
