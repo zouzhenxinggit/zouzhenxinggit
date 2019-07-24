@@ -1,0 +1,234 @@
+Makefile的语法规则
+
+1.
+targets : prerequisites
+command
+
+2.
+targets : prerequisites ; command
+
+
+targets	目标
+prerequisites	依赖
+commond	命令
+
+12这两种方式都行，2方式能用换行符号
+1方式命令前面需要+tab
+makefile支持通配符
+
+
+make主要包括五方面的内容
+显式规则
+隐式规则
+变量定义
+文件指示
+注释
+
+伪目标
+伪目标没有依赖 执行就行，但是不能和其他文件同名
+为了避免伪目标和文件重名 可以使用.PHONY标记
+.PHONY : clean
+向makefile说明不管有么有这个文件，这个文件都是伪目标
+
+-MM选项自动寻找依赖
+gcc -MM Calculation.c 
+-M寻找所有依赖库函数也都有依赖
+
+
+
+exec:
+	cd /home/zouzhenxing
+	pwd
+exet:
+	cd /home/zouzhenxing;pwd
+希望上一条命令作用于下一条 使用分号
+
+exet:
+	-cd /home/zouzhenxing
+pwd
++个-号意思就是这句话不管对错都认为是成功的
+还有一个办法就是
+make -i    或者 make --ignore-errors
+
+
+@echo building
+
+
+变量的基础
+变量可以在任何地方使用，使用的时候需   $（变量）或者$ { 变量 }
+ 变量的本质就是宏替换
+名字大小写是敏感的
+名字随便起 除了 ： # = 随便起
+变量是可以循环的
+wo = $(bao)
+bao = $(ni)
+ni = $(aa)
+aa = ???
+.PHONY: all
+all:
+@echo ${wo}
+最终输出结果就是 ???
+
+CFLAGS= $(include_dirs) -O
+include_dirs = -Ifoo -Ibar
+.PHONY = flag
+flag :
+@echo  CFLAGS
+
+make是支持循环的
+A = $(B)
+B = $(A)
+ab:
+@echo $(A)  A循环了error
+
+可以 B = 啥也没有
+:= 前面不可以调用后面
+后面可以调用前面的
+A := $(B)
+B := $(A)
+abc:
+	@echo $(A)
+
+如果C没有被定义，C=213
+C ?= 213
+变量是可以重复定义的
+
+
+aa := 11
+bb := 22
+cc := 33
+
+aa += 44 把aa变量取出来 填个44
+ee := $(bb) 55
+
+.PHONY : bnbn
+bnbn : 
+	@echo $(aa) 11 44
+	@echo $(ee)
+
+如果aa没有定义过，+=直接变=
+如果前一次是：= 那么+=会以：=进行赋值
+
+可以用define关键字
+define two-com
+	echo foo
+	echo $(obj-source)
+endef
+用这种方式定义变量好看优美
+
+
+如果说这个变量定义完之后不想被修改 + override 关键字
+override SNAKE = snake
+
+made = 345
+override made += 123
+
+override define two-com
+	echo foo
+	echo $(obj-source)
+endef
+
+定义目标变量 只有这个依赖能用,其他的跟没定义一样
+这个变量会作用到由这个目标所引发的所有的规则中去
+xx: cx = 123
+xx:
+	@echo ${cx}
+
+模式变量是目标变量的一种
+模式变量就是说 %o 就行,比如make xo 执行这里 make 1go也执行这里 只要结尾带o的都行 这就是模式变量
+这种模式变量只能卸载目标变量中 
+%o: wocao = 345;
+%o:
+	@echo ${wocao}
+
+
+函数
+1.字符串处理函数
+subst字符串替换
+patsubst模式字符串替换 把*.c换成*.o
+查找字符串 findstring
+过滤字符串 filter
+反过滤字符串 filter-out
+排序字符串 sort
+取出单词 word
+取出首单词串 wordlist
+单词个数统计words
+首单词字符串 firstword
+sty := qw eiu hv diiu fda
+sty1 := $(firstword $(sty))
+
+.PHONY : shi
+shi:
+	@echo $(sty)
+	@echo $(sty1)
+	@echo $(firstword qwe jkl bacfih)
+
+jj = /home/zouzhenxing/snake/bean.c
+file:
+	@echo $(dir $(jj))
+	@echo $(notdir $(jj))
+
+2.文件名操作函数
+取出目录dir
+取出文件notdir
+取出后缀名
+取出掀前缀名
+加后缀
+加前缀
+连接函数
+
+3循环函数 + 条件函数
+name := a b c d e f g
+namenew := $(foreach n,$(name),$(n).x) 
+for:
+	@echo $(namenew)
+[10:55]@-OptiPlex-3020:~/snake$ make for 
+a.x b.x c.x d.x e.x f.x g.x
+
+////////////////////////////////
+n = 2
+ifeq ($(n),1)
+	o = yes
+else
+	o = no
+endif
+
+if:
+	@echo $(o)
+
+ifeq ifneq ifdef ifndef
+
+其他函数
+call
+origin 	@echo $(origin n)  ==> file 变量的来源
+
+reverse = $(2) $(1)
+foo = $(call reverse,a,b)
+res:
+	@echo $(foo) ==>b a
+
+shell函数
+bcd := $(shell cat bean)
+#hhh := $(error rtyuiooooooooooo)
+hhh := $(warning rtyuiooooooooooo)
+
+bcc:
+	@echo $(bcd)
+	@echo $(hhh)
+
+error
+warning
+
+
+
+
+///////////////////////////////////////////////////////
+snake : *.c
+	@echo $?	所有比目标新的依赖集合
+	@echo $@	所有目标的集合
+	@echo $<	依赖中第一个目标名字
+	@echo $^	所有依赖的集合
+
+
+
+
