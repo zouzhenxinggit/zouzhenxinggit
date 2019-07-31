@@ -1,20 +1,20 @@
 #include <stdio.h>
 
 
-// # define DEBUG
+#define __DEBUG
 
 
 void main(int argc, char const *argv[])
 {
-	
-#ifdef DEBUG
+
+#ifdef __DEBUG
 
 	printf("1");
 #else
 
 	printf("2");
-#
-	
+
+#endif
 	printf("3");
 	return;
 }
