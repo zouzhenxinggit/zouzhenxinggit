@@ -48,7 +48,9 @@ int main(int argc, char const *argv[])
     return 0;
   }
 
-  pthread_join(ntid1, &retval);
-  //printf("run");
+  //挂起当前线程，等待其他线程运行完毕后，恢复当前线程
+  //hang current thread, wait other thread run after, restore current thread.
+  pthread_join(ntid2, &retval);
+  printf("ssssss\n");printf("ssssss\n");printf("ssssss\n");
   return 0;
 }
