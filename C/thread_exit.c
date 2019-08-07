@@ -8,17 +8,19 @@
 
 void *thread_fun1(void *arg)
 {
-  while (1) {
-    printf("hello_word1, printf main pid\n");
-    pid_t pid = getpid();
-    pthread_t tid = pthread_self();
+  int i = 0;
 
-    //打印线程1 pid tid
-    printf("thread1 pid: %d\n", (int)pid);
-    printf("thread1 tid: %u\n", (int)tid);
+  printf("hello_word1, printf main pid\n");
+
+  for(i; i < 5; i++) {
+    printf("-%d-\n", i);
     sleep(1);
   }
-  // return((void*)0);
+
+//pthread_exit是当前退出线程, 释放线程的栈空间.(只要线程结束, 线程栈空间都会被释放掉)
+//但是不用join的话, 父线程中子线程的维护信息不会被释放, 创建很多线程的话,父类的栈空间会满
+//join等待其他线程结束, 并释放父线程中子线程的维护信息
+  pthread_exit(NULL);
 }
 
 void *thread_fun2(void *arg)
@@ -35,6 +37,7 @@ void *thread_fun2(void *arg)
   }
   // return((void*)0);
 }
+
 
 int main(int argc, char const *argv[]) {
   /* code */
@@ -68,6 +71,6 @@ int main(int argc, char const *argv[]) {
     /* code */
     sleep(1);
   }
-  //printf("run");
+
   return 0;
 }

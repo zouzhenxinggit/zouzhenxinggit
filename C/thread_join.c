@@ -23,11 +23,13 @@ void thread_fun1(char *pstr)
 void thread_fun2(char *pstr)
 {
   int i = 0;
-  for(i; i < 10; i++) {
+  for(i; i < 5; i++) {
     printf("-%s-\n", pstr);
     sleep(1);
   }
+  //pthread_exit 正常退出 pthread_cancel 都会释放栈资源
 }
+
 
 int main(int argc, char const *argv[])
 {
