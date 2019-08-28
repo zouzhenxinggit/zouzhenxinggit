@@ -64,7 +64,7 @@ int main(int argc, char const *argv[]) {
 
   status = pthread_join(ntid1, NULL);
   if (status) {
-    printf("pthread_create2 error\n");
+    printf("pthread_create1 error\n");
   }
 
   status = pthread_join(ntid2, NULL);
