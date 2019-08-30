@@ -12,6 +12,7 @@ void ThreadLockInit() {
   status = pthread_mutex_init(&write_malloc_mutex, NULL);
   if (status) {
     printf("pthread_mutex_init error\n");
+    return -1;
   }
 }
 
@@ -42,16 +43,19 @@ void CreateThreadFramework() {
   status = pthread_once(&write_malloc_lock_init, ThreadLockInit);
   if (status) {
     printf("pthread_once error\n");
+    return -1;
   }
 
   status = pthread_create(&ntid1, NULL, Pthread1Start, NULL);
   if (status) {
     printf("pthread_create1 error\n");
+    return -1;
   }
 
   status = pthread_create(&ntid2, NULL, (void *) &Pthread2Start, "2");
   if (status) {
     printf("pthread_create2 error\n");
+    return -1;
   }
 }
 
@@ -65,13 +69,16 @@ int main(int argc, char const *argv[]) {
   status = pthread_join(ntid1, NULL);
   if (status) {
     printf("pthread_create1 error\n");
+    return -1;
   }
 
   status = pthread_join(ntid2, NULL);
   if (status) {
     printf("pthread_create2 error\n");
+    return -1;
   }
 
   printf("end resulf = %d\n", p_frequent_operator_var);
+
   return 0;
 }

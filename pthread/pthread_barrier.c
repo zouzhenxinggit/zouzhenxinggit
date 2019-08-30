@@ -1,5 +1,5 @@
 /*
- * pthread_rwlock.c
+ * pthread_barrier.c
  *
  * The windows message processing methods.
  *
@@ -28,93 +28,83 @@
 #include <stdio.h>
 #include <pthread.h>
 
-/* -- GLOBAL VARIABLES --------------------------------------------- */
+/* -- DEFINITIONS ---------------------------------------------------------- */
+
+#define BARRIER_NUMBER    3
+
+/* -- GLOBAL VARIABLES ----------------------------------------------------- */
 
 /*
  * pthread variable
  */
-pthread_rwlock_t rwlock;
-// pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
+pthread_barrier_t barrier;
 pthread_t ntid1;
 pthread_t ntid2;
 
-int rw_data = 8;
-
 /* -- PRIVATE FUNCTIONS ---------------------------------------------------- */
 
-/*
- * write pthread
- */
-void *pthread_write(void* arg) {
-  int i;
-
-  for (i = 0; i < 10; ++i) {
+void *threadFun1(void *arg) {
+  pthread_barrier_wait(&barrier);
+  while(1) {
+    printf("-threadFun1-\n");
     sleep(1);
-
-    pthread_rwlock_wrlock(&rwlock);
-    rw_data = i;
-    pthread_rwlock_unlock(&rwlock);
-
-    printf("pthread_write, tid = %d\n", (int)pthread_self());
   }
 }
 
-/*
- * read pthread
- */
-void *pthread_read(void* arg) {
-  int i;
-
-  for (i = 0; i < 10; ++i) {
-    sleep(2);
-
-    pthread_rwlock_rdlock(&rwlock);
-    printf("%d\n", rw_data);
-    pthread_rwlock_unlock(&rwlock);
-
-    printf("pthread_read, tid = %d, rw_data\n", (int)pthread_self());
+void *threadFun2(void *arg) {
+  pthread_barrier_wait(&barrier);
+  while(1) {
+    printf("-threadFun2-\n");
+    sleep(1);
   }
 }
 
-/*
- * pthread_rwlock_wrlock && pthread_rwlock_rdlock
- * read - read Only one can be read at a time
- * write - write Only one can be write at a time
- * read - write priority write > read
- */
 int main(int argc, char const *argv[]) {
-  int status = 0;
+  int status;
 
-  status = pthread_rwlock_init(&rwlock, NULL);
+  /* create pthread barrier
+   */
+  status = pthread_barrier_init(&barrier, NULL, BARRIER_NUMBER);
   if (status) {
-    printf("pthread_rwlock_init wrong: %d\n", strerror(status));
+    printf("pthread_barrier_init wrong! %d", strerror(status));
+    return -1;
   }
 
-  status = pthread_create(&ntid1, NULL, pthread_write, NULL);
+  /* create pthread
+   */
+  status = pthread_create(&ntid1, NULL, threadFun1, NULL);
   if (status) {
-    printf("pthread_create ntid1 wrong: %d\n", strerror(status));
+    printf("thread1 create wrong! %d", strerror(status));
+    return -1;
+  }
+  status = pthread_create(&ntid2, NULL, threadFun2, NULL);
+  if (status) {
+    printf("thread2 create wrong! %d", strerror(status));
+    return -1;
   }
 
-  status = pthread_create(&ntid2, NULL, pthread_read, NULL);
+  /* open barrier, destroy barrier
+   */
+  pthread_barrier_wait(&barrier);
+  status = pthread_barrier_destroy(&barrier);
   if (status) {
-    printf("pthread_create ntid2 wrong: %d\n", strerror(status));
+    printf("pthread_barrier_destroy wrong! %d", strerror(status));
+    return -1;
   }
 
+  /* main thread wait other thread stop
+   */
   status = pthread_join(ntid1, NULL);
   if (status) {
     printf("pthread_join ntid1 wrong: %d\n", strerror(status));
+    return -1;
   }
-
   status = pthread_join(ntid2, NULL);
   if (status) {
     printf("pthread_join ntid2 wrong: %d\n", strerror(status));
-  }
-
-  status = pthread_rwlock_destroy(&rwlock);
-  if (status) {
-    printf("pthread_rwlock_destory: %d\n", strerror(status));
+    return -1;
   }
   return 0;
 }
 
-/* build: gcc pthread_rwlock_init.c -o thread -lpthread */
+/* build: gcc pthread_spinlock.c -o thread -lpthread */
