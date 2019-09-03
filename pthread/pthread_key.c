@@ -1,5 +1,5 @@
 /*
- * pthread_barrier.c
+ * pthread_key.c
  *
  * The windows message processing methods.
  *
