@@ -49,3 +49,23 @@
 /* -- INTERFACE FUNCTIONS -------------------------------------------------- */
 /* -- PRIVATE FUNCTIONS ---------------------------------------------------- */
 
+Jan
+Feb
+Mar
+Apr
+May
+June
+July
+Aug
+Sept
+Oct
+Nov
+Dec
+
+Mon.=Monday
+Tues.=Tuesday
+Wed.=Wednesday
+Thur.=Thursday
+Fri.=Friday
+Sat.=Saturday
+Sun.=Sunday
