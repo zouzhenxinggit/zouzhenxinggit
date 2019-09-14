@@ -29,12 +29,12 @@
 #include "../include/list.h"
 #include "../include/list_stack.h"
 
-// #include <stdio.h>
-//#include <stdlib.h>
+#include <stdio.h>
+// #include <stdlib.h>
 
 /* -- MAIN FUNCTIONS ------------------------------------------------------- */
 
 int main(int argc, char const *argv[]) {
-  //printf("hello world\n");
+  printf("hello world\n");
   return 0;
 }
