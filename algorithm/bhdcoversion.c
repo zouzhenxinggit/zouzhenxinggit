@@ -1,11 +1,11 @@
 /*
- * list_heap.h
+ * bhdcoversion.c
  *
  * The windows message processing methods.
  *
  * Copyright (c) 1999-2000 Pawel W. Olszta. All Rights Reserved.
  * Written by Pawel W. Olszta, <olszta@sourceforge.net>
- * Creation date: Thur Sept 12 2019
+ * Creation date: Thur Sept 15 2019
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -24,3 +24,13 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+#include <stdio.h>
+// #include <stdlib.h>
+
+/* -- MAIN FUNCTIONS ------------------------------------------------------- */
+
+int main(int argc, char const *argv[]) {
+  printf("Hello world\n");
+  return 0;
+}

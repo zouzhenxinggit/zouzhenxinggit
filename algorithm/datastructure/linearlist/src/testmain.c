@@ -1,5 +1,5 @@
 /*
- * list.h
+ * testmain.c
  *
  * The windows message processing methods.
  *
@@ -24,3 +24,18 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+#include "../include/list_heap.h"
+#include "../include/list.h"
+#include "../include/list_stack.h"
+
+#include <stdio.h>
+// #include <stdlib.h>
+
+/* -- MAIN FUNCTIONS ------------------------------------------------------- */
+
+int main(int argc, char const *argv[]) {
+  // struct A *p = getStructBaseAddress(struct A, c, &(S.c));
+  printf("Hello world\n");
+  return 0;
+}

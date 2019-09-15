@@ -1,5 +1,5 @@
 /*
- * testmain.c
+ * list_stack.h
  *
  * The windows message processing methods.
  *
@@ -25,16 +25,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include "../include/list_heap.h"
-#include "../include/list.h"
-#include "../include/list_stack.h"
+#ifndef _LINEARLIST_SRC_LISTSTACK_H
 
-#include <stdio.h>
-// #include <stdlib.h>
 
-/* -- MAIN FUNCTIONS ------------------------------------------------------- */
-
-int main(int argc, char const *argv[]) {
-  printf("hello world\n");
-  return 0;
-}
+#endif /* !_LINEARLIST_SRC_LISTSTACK_H */
